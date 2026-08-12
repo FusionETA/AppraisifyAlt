@@ -3,11 +3,11 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const SESSION_COOKIE = "appraisifyalt_session"
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7
-const PROTECTED_PREFIXES = ["/dashboard", "/admin"] as const
+const PROTECTED_PREFIXES = ["/employee", "/admin"] as const
 
 const ROLE_PATHS: Record<string, string> = {
-  EMPLOYEE: "/dashboard",
-  SUPERVISOR: "/dashboard",
+  EMPLOYEE: "/employee",
+  SUPERVISOR: "/employee",
   ADMIN: "/admin",
   OWNER: "/admin",
 }
@@ -177,5 +177,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*"],
+  matcher: ["/employee/:path*", "/admin/:path*"],
 }

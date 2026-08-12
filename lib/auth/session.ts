@@ -37,7 +37,7 @@ export function getAuthSecret() {
 }
 
 function getHomePath(role: AppRole) {
-  return (isAdminRole(role) ? "/admin" : "/dashboard") as Route
+  return (isAdminRole(role) ? "/admin" : "/employee") as Route
 }
 
 function signValue(value: string) {

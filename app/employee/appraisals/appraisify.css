@@ -1,0 +1,284 @@
+/*
+ * Scoped design tokens + component classes for the Appraisify module.
+ *
+ * Wrap any appraisal page tree in <div className="appraisify-scope">.
+ * Inside that scope the module always renders in AppraisifyAlt's LIGHT
+ * palette, regardless of the app-wide dark mode toggle (`.dark` on an
+ * ancestor) — the reference UI was designed light-only, and many of the
+ * component classes below (rating inputs, mobile cards) hardcode light
+ * colours rather than theme variables, so a half-dark render would look
+ * broken rather than themed. The light token values are re-declared below
+ * (copied from `:root` in app/globals.css) so they win over any `.dark`
+ * ancestor's cascade.
+ *
+ * Manrope is already the global body font (next/font in app/layout.tsx), so
+ * no font-face is needed here. Material Symbols Outlined is loaded via a
+ * <link> in the appraisals layouts.
+ */
+
+.appraisify-scope {
+  /* Light-mode token values, copied from `:root` in app/globals.css. */
+  --background: 204 20% 95%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 215 85% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 30% 95%;
+  --secondary-foreground: 215 40% 25%;
+  --muted: 210 20% 95%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 215 30% 95%;
+  --accent-foreground: 215 40% 25%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 20% 88%;
+  --input: 214 20% 88%;
+  --ring: 215 85% 50%;
+  --surface: 204 20% 95%;
+  --surface-container: 210 18% 93%;
+  --surface-container-low: 210 16% 95%;
+  --surface-container-high: 210 14% 90%;
+  --surface-container-lowest: 0 0% 100%;
+  --tertiary: 38 92% 50%;
+  --tertiary-foreground: 0 0% 100%;
+  --tertiary-fixed: 38 100% 90%;
+  --success: 160 84% 30%;
+  --success-foreground: 0 0% 100%;
+
+  color: #1e293b; /* slate-800 body text on white cards */
+  font-family: var(--font-body), "Manrope", sans-serif;
+}
+
+/* ─── Shimmer skeleton loaders ─────────────────────────────────────── */
+@keyframes ap-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.appraisify-scope .skel {
+  display: inline-block;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f8fafc 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: ap-shimmer 1.4s infinite;
+  vertical-align: middle;
+}
+.appraisify-scope .skel-sm {
+  height: 10px;
+}
+.appraisify-scope .skel-avatar {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f8fafc 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: ap-shimmer 1.4s infinite;
+  margin: auto;
+}
+
+/* ─── Metadata card ────────────────────────────────────────────────── */
+.appraisify-scope .profile-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 2px;
+}
+.appraisify-scope .profile-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  display: block;
+}
+
+/* ─── Rating table inputs ──────────────────────────────────────────── */
+.appraisify-scope .rating-input {
+  width: 5rem;
+  text-align: center;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  background: #fff;
+}
+.appraisify-scope .rating-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+.appraisify-scope .rating-readonly {
+  width: 5rem;
+  text-align: center;
+  font-weight: 700;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  cursor: not-allowed;
+  display: inline-block;
+}
+.appraisify-scope .comment-input {
+  width: 100%;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  min-height: 140px;
+  padding: 0.5rem 0.625rem;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.appraisify-scope .comment-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+.appraisify-scope .comment-readonly {
+  width: 100%;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  background: rgba(248, 250, 252, 0.5);
+  padding: 0.75rem;
+  height: 140px;
+  overflow-y: auto;
+  font-style: italic;
+  color: #64748b;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.appraisify-scope .col-locked {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ─── Fixed / sticky bottom action bar ─────────────────────────────── */
+.appraisify-scope .action-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 30;
+}
+
+/* ─── Material Symbols base ────────────────────────────────────────── */
+.appraisify-scope .material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  vertical-align: middle;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* ─── Scrollbars ───────────────────────────────────────────────────── */
+.appraisify-scope .hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.appraisify-scope .hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─── Mobile appraisal question card ───────────────────────────────── */
+.appraisify-scope .mobile-q-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+.appraisify-scope .mobile-q-card-header {
+  padding: 0.875rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  line-height: 1.4;
+}
+.appraisify-scope .mobile-q-scores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+.appraisify-scope .mobile-q-score-cell {
+  padding: 0.75rem 0.625rem;
+  text-align: center;
+  border-right: 1px solid #f1f5f9;
+}
+.appraisify-scope .mobile-q-score-cell:last-child {
+  border-right: none;
+}
+.appraisify-scope .mobile-q-score-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 6px;
+}
+.appraisify-scope .mobile-q-comment {
+  padding: 0.75rem 1rem;
+}
+.appraisify-scope .mobile-q-comment-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 6px;
+}
+.appraisify-scope .rating-input-mobile {
+  width: 4rem;
+  text-align: center;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.375rem;
+  background: #fff;
+  font-size: 1rem;
+  display: block;
+  margin: 0 auto;
+}
+.appraisify-scope .rating-badge {
+  display: inline-block;
+  min-width: 2.5rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #475569;
+  background: rgba(241, 245, 249, 0.8);
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.5rem;
+}
+.appraisify-scope .rating-badge-pending {
+  font-size: 0.65rem;
+  font-style: italic;
+  color: #94a3b8;
+}
