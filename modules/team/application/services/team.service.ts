@@ -10,7 +10,16 @@ import { userRepository } from "@/modules/team/infrastructure/user.repository"
 
 /* ── page data ─────────────────────────────────────────────────────── */
 
-/** The Employees roster: every org member's account info + their current appraisal status. */
+/** The Employees management page — account info only, no appraisal data. */
+export async function getTeamPageData(): Promise<{ members: TeamMemberRow[] } | null> {
+  const session = await getCurrentSession()
+  if (!session) return null
+  const orgId = resolveActiveOrgId(session)
+  if (!orgId) return null
+  return { members: await userRepository.listOrgMembers(orgId) }
+}
+
+/** Dashboard's employee picker: account info + each person's current appraisal status. */
 export async function getEmployeeRosterData(): Promise<{ members: EmployeeRosterRow[] } | null> {
   const session = await getCurrentSession()
   if (!session) return null
