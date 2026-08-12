@@ -25,7 +25,7 @@ import {
   type StartAppraisalPageData,
 } from "@/modules/appraisify/domain/models"
 
-import { createAppraisalsAction } from "../actions"
+import { createAppraisalsAction } from "./actions"
 
 type Assignment = { reviewerId: string; partnerId: string }
 
@@ -118,7 +118,7 @@ export function StartAppraisalClient({
       templateId: templateId || null,
     })
     if (res.ok) {
-      router.push("/admin/appraisals")
+      router.push("/admin/employees")
       router.refresh()
     } else {
       setError(res.message)
@@ -131,11 +131,11 @@ export function StartAppraisalClient({
       {/* Sub-header */}
       <div>
         <Link
-          href="/admin/appraisals"
+          href="/admin/employees"
           className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
         >
           <Icon name="arrow_back" className="text-lg" />
-          Dashboard
+          Employees
         </Link>
         <h1 className="mt-3 text-2xl font-extrabold text-foreground">Configure Appraisal Cycle</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -349,7 +349,7 @@ export function StartAppraisalClient({
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border/60 bg-card/95 px-4 py-4 backdrop-blur-sm lg:pl-[280px]">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
           <Button variant="outline" asChild>
-            <Link href="/admin/appraisals">
+            <Link href="/admin/employees">
               <Icon name="arrow_back" className="text-lg" />
               Cancel
             </Link>

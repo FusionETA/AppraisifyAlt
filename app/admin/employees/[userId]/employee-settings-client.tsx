@@ -97,7 +97,7 @@ export function EmployeeSettingsClient({ member, isSelf }: { member: TeamMemberR
   return (
     <div className="mx-auto max-w-2xl space-y-6 px-4 py-10">
       <Link
-        href="/admin/team"
+        href="/admin/employees"
         className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary"
       >
         Employees

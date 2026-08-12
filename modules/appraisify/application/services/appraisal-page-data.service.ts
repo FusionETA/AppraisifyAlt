@@ -9,9 +9,8 @@ import {
   resolvePhaseForUser,
   scoreSummary,
   toAppraisalListItem,
-  type AdminAppraisalDashboardData,
   type AdminAppraisalHistoryRow,
-  type AdminEmployeeRow,
+  type AdminDashboardData,
   type AppraisalFormData,
   type AppraisalRecord,
   type EmployeeAppraisalDashboardData,
@@ -113,39 +112,14 @@ export async function getAppraisalConfirmationData(
   return { referenceNumber: record.referenceNumber }
 }
 
-/** Admin dashboard bag: stats, employees, history, reviewer/partner options. */
-export async function getAdminAppraisalDashboardData(): Promise<AdminAppraisalDashboardData | null> {
+/** Admin dashboard bag: cycle stats + history. */
+export async function getAdminDashboardData(): Promise<AdminDashboardData | null> {
   const session = await getCurrentSession()
   if (!session) return null
   const orgId = resolveActiveOrgId(session)
   if (!orgId) return null
 
-  const [records, employees, people, templates] = await Promise.all([
-    appraisalRepository.listForOrg(orgId),
-    appraisalRepository.listOrgEmployees(orgId),
-    appraisalRepository.listOrgPeople(orgId),
-    appraisalTemplateRepository.listForOrg(orgId),
-  ])
-
-  // Active (non-SUBMITTED) appraisal stage per reviewee.
-  const activeByReviewee = new Map<string, AppraisalRecord>()
-  for (const r of records) {
-    if (r.stage !== "SUBMITTED" && !activeByReviewee.has(r.reviewee.id)) {
-      activeByReviewee.set(r.reviewee.id, r)
-    }
-  }
-
-  const employeeRows: AdminEmployeeRow[] = employees.map((e) => {
-    const active = activeByReviewee.get(e.userId) ?? null
-    return {
-      id: e.userId,
-      name: e.name,
-      initials: initialsFor(e.name),
-      position: e.jobTitle,
-      department: "",
-      activeStage: active ? active.stage : null,
-    }
-  })
+  const records = await appraisalRepository.listForOrg(orgId)
 
   const history: AdminAppraisalHistoryRow[] = records.map((r) => ({
     id: r.id,
@@ -160,10 +134,7 @@ export async function getAdminAppraisalDashboardData(): Promise<AdminAppraisalDa
       active: records.filter((r) => r.stage !== "SUBMITTED").length,
       complete: records.filter((r) => r.stage === "SUBMITTED").length,
     },
-    employees: employeeRows,
     history,
-    people,
-    templates,
   }
 }
 

@@ -25,8 +25,8 @@ export async function aiImproveQuestionAction(input: AiImproveQuestionInput) {
 export async function saveTemplateAction(input: SaveTemplateInput) {
   const res = await saveTemplate(input)
   if (res.ok) {
-    revalidatePath("/admin/appraisals/templates")
-    revalidatePath("/admin/appraisals")
+    revalidatePath("/admin/questions")
+    revalidatePath("/admin")
   }
   return res
 }
@@ -34,8 +34,8 @@ export async function saveTemplateAction(input: SaveTemplateInput) {
 export async function archiveTemplateAction(templateId: string) {
   const res = await archiveTemplate(templateId)
   if (res.ok) {
-    revalidatePath("/admin/appraisals/templates")
-    revalidatePath("/admin/appraisals")
+    revalidatePath("/admin/questions")
+    revalidatePath("/admin")
   }
   return res
 }

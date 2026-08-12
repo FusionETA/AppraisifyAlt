@@ -4,17 +4,39 @@ import { z } from "zod"
 
 import { hashPassword } from "@/lib/auth/password"
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
-import { assignableRoles, defaultPasswordFor, type TeamMemberRow } from "@/modules/team/domain/models"
+import { appraisalRepository } from "@/modules/appraisify/infrastructure/appraisal.repository"
+import { assignableRoles, defaultPasswordFor, type EmployeeRosterRow, type TeamMemberRow } from "@/modules/team/domain/models"
 import { userRepository } from "@/modules/team/infrastructure/user.repository"
 
 /* ── page data ─────────────────────────────────────────────────────── */
 
-export async function getTeamPageData(): Promise<{ members: TeamMemberRow[] } | null> {
+/** The Employees roster: every org member's account info + their current appraisal status. */
+export async function getEmployeeRosterData(): Promise<{ members: EmployeeRosterRow[] } | null> {
   const session = await getCurrentSession()
   if (!session) return null
   const orgId = resolveActiveOrgId(session)
   if (!orgId) return null
-  return { members: await userRepository.listOrgMembers(orgId) }
+
+  const [members, appraisals] = await Promise.all([
+    userRepository.listOrgMembers(orgId),
+    appraisalRepository.listForOrg(orgId),
+  ])
+
+  // First non-SUBMITTED appraisal per reviewee — same "active cycle" rule
+  // the old admin dashboard used.
+  const activeByReviewee = new Map<string, (typeof appraisals)[number]["stage"]>()
+  for (const a of appraisals) {
+    if (a.stage !== "SUBMITTED" && !activeByReviewee.has(a.reviewee.id)) {
+      activeByReviewee.set(a.reviewee.id, a.stage)
+    }
+  }
+
+  return {
+    members: members.map((m) => ({
+      ...m,
+      activeAppraisalStage: activeByReviewee.get(m.id) ?? null,
+    })),
+  }
 }
 
 export async function getEmployeeSettingsData(userId: string): Promise<TeamMemberRow | null> {
@@ -30,6 +52,7 @@ export async function getEmployeeSettingsData(userId: string): Promise<TeamMembe
     email: user.email,
     role: user.role,
     status: user.status,
+    title: user.title,
     createdAt: user.createdAt.toISOString(),
   }
 }

@@ -11,7 +11,8 @@ import {
 export async function createAppraisalsAction(input: CreateAppraisalsInput) {
   const result = await createAppraisalsForEmployees(input)
   if (result.ok) {
-    revalidatePath("/admin/appraisals")
+    revalidatePath("/admin")
+    revalidatePath("/admin/employees")
   }
   return result
 }

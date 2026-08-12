@@ -25,7 +25,7 @@ export function AdminAppraisalDetailClient({ record }: { record: AppraisalRecord
     <div className="mx-auto max-w-5xl space-y-6 pb-10">
       <div className="flex items-center justify-between gap-4">
         <Link
-          href="/admin/appraisals"
+          href="/admin"
           className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
         >
           <Icon name="arrow_back" className="text-lg" />

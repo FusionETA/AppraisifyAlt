@@ -32,16 +32,7 @@ export function TemplatesListClient({
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admin/appraisals"
-              className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary"
-            >
-              <Icon name="arrow_back" className="text-base" />
-              Appraisals
-            </Link>
-          </div>
-          <h1 className="mt-1 text-2xl font-extrabold text-foreground">Question Sets</h1>
+          <h1 className="text-2xl font-extrabold text-foreground">Question Sets</h1>
           <p className="mt-0.5 text-sm text-muted-foreground">
             Reusable question templates applied when starting an appraisal
           </p>
@@ -52,12 +43,12 @@ export function TemplatesListClient({
             variant="outline"
             className="border-violet-200 bg-violet-50 text-violet-700 hover:bg-violet-100"
           >
-            <Link href="/admin/appraisals/ai-setup">
+            <Link href="/admin/questions/ai-setup">
               <span aria-hidden>✨</span> AI Setup
             </Link>
           </Button>
           <Button asChild>
-            <Link href="/admin/appraisals/templates/new">
+            <Link href="/admin/questions/new">
               <Icon name="add" className="text-lg" />
               New template
             </Link>
@@ -76,7 +67,7 @@ export function TemplatesListClient({
             appraisals with no template fall back to the built-in default set.
           </p>
           <Button asChild className="mt-5">
-            <Link href="/admin/appraisals/templates/new">
+            <Link href="/admin/questions/new">
               <Icon name="add" className="text-lg" />
               New template
             </Link>
@@ -104,7 +95,7 @@ export function TemplatesListClient({
                   <span className="hidden sm:inline">Archive</span>
                 </Button>
                 <Button asChild variant="secondary" size="sm">
-                  <Link href={`/admin/appraisals/templates/${t.id}`}>
+                  <Link href={`/admin/questions/${t.id}`}>
                     <Icon name="edit" className="text-base" />
                     Edit
                   </Link>

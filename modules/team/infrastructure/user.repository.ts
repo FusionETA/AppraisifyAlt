@@ -16,7 +16,7 @@ export const userRepository = {
     const prisma = getPrisma()
     const rows = await prisma.user.findMany({
       where: { organizationId: orgId },
-      select: { id: true, name: true, email: true, role: true, status: true, createdAt: true },
+      select: { id: true, name: true, email: true, role: true, status: true, title: true, createdAt: true },
       orderBy: { createdAt: "asc" },
     })
     return rows.map((r) => ({
@@ -25,6 +25,7 @@ export const userRepository = {
       email: r.email,
       role: r.role,
       status: r.status,
+      title: r.title,
       createdAt: r.createdAt.toISOString(),
     }))
   },

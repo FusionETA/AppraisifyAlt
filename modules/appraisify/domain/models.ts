@@ -373,17 +373,6 @@ export type EmployeeAppraisalDashboardData = {
   history: AppraisalListItem[]
 }
 
-/** One row in the admin employees table. */
-export type AdminEmployeeRow = {
-  id: string
-  name: string
-  initials: string
-  position: string
-  department: string
-  /** Stage of this employee's active appraisal, or null if none. */
-  activeStage: AppraisalStage | null
-}
-
 /** One row in the admin appraisal-history table. */
 export type AdminAppraisalHistoryRow = {
   id: string
@@ -393,15 +382,12 @@ export type AdminAppraisalHistoryRow = {
   submittedAt: string | null
 }
 
-/** Admin dashboard bag. */
-export type AdminAppraisalDashboardData = {
+/** Admin dashboard bag — cycle stats + history. Per-employee roster (account +
+ * appraisal status) lives in modules/team, and reviewer/template candidates
+ * are fetched directly by the Start Appraisal page. */
+export type AdminDashboardData = {
   stats: { active: number; complete: number }
-  employees: AdminEmployeeRow[]
   history: AdminAppraisalHistoryRow[]
-  /** Candidates for the reviewer / partner selects in the start dialog. */
-  people: AppraisalPersonRef[]
-  /** Question templates for the Start-Appraisal dropdown. */
-  templates: AppraisalTemplateSummary[]
 }
 
 /** Data the appraisal form page passes to the form/banner/redirect. */

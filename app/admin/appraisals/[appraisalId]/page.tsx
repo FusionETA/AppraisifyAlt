@@ -17,7 +17,7 @@ export default async function AdminAppraisalDetailPage({
   const { appraisalId } = await params
 
   const record = await getAdminAppraisalDetailData(appraisalId)
-  if (!record) redirect("/admin/appraisals")
+  if (!record) redirect("/admin")
 
   return <AdminAppraisalDetailClient record={record} />
 }

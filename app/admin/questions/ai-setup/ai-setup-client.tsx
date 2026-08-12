@@ -15,7 +15,7 @@ import {
   type AiGeneratedTemplate,
 } from "@/modules/appraisify/domain/models"
 
-import { saveTemplateAction } from "../templates/actions"
+import { saveTemplateAction } from "../actions"
 import { aiSetupChatAction } from "./actions"
 
 const TEMPLATE_LIMIT = 5
@@ -103,7 +103,7 @@ export function AiSetupClient() {
     <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-6xl flex-col px-4 py-6">
       <div className="mb-4 flex items-center justify-between gap-4">
         <a
-          href="/admin/appraisals/templates"
+          href="/admin/questions"
           onClick={(e) => {
             if (hasUnsaved && !confirm("You have unsaved templates. Leave without saving them?")) {
               e.preventDefault()

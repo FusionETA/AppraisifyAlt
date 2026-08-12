@@ -14,15 +14,15 @@ import {
 
 export async function createEmployeeAction(input: CreateEmployeeInput) {
   const res = await createEmployee(input)
-  if (res.ok) revalidatePath("/admin/team")
+  if (res.ok) revalidatePath("/admin/employees")
   return res
 }
 
 export async function updateEmployeeProfileAction(userId: string, input: UpdateEmployeeProfileInput) {
   const res = await updateEmployeeProfile(userId, input)
   if (res.ok) {
-    revalidatePath("/admin/team")
-    revalidatePath(`/admin/team/${userId}`)
+    revalidatePath("/admin/employees")
+    revalidatePath(`/admin/employees/${userId}`)
   }
   return res
 }
@@ -30,8 +30,8 @@ export async function updateEmployeeProfileAction(userId: string, input: UpdateE
 export async function updateEmployeeRoleAction(userId: string, role: string) {
   const res = await updateEmployeeRole(userId, role)
   if (res.ok) {
-    revalidatePath("/admin/team")
-    revalidatePath(`/admin/team/${userId}`)
+    revalidatePath("/admin/employees")
+    revalidatePath(`/admin/employees/${userId}`)
   }
   return res
 }
@@ -39,8 +39,8 @@ export async function updateEmployeeRoleAction(userId: string, role: string) {
 export async function setEmployeeStatusAction(userId: string, status: "active" | "deactivated") {
   const res = await setEmployeeStatus(userId, status)
   if (res.ok) {
-    revalidatePath("/admin/team")
-    revalidatePath(`/admin/team/${userId}`)
+    revalidatePath("/admin/employees")
+    revalidatePath(`/admin/employees/${userId}`)
   }
   return res
 }

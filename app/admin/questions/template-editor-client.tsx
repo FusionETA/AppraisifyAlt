@@ -160,7 +160,7 @@ export function TemplateEditorClient({
       })),
     })
     if (res.ok) {
-      router.push("/admin/appraisals/templates")
+      router.push("/admin/questions")
       router.refresh()
     } else {
       setError(res.message)
@@ -175,7 +175,7 @@ export function TemplateEditorClient({
       {/* Sub-header */}
       <div className="flex items-center justify-between gap-4">
         <Link
-          href="/admin/appraisals/templates"
+          href="/admin/questions"
           className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary"
         >
           <Icon name="arrow_back" className="text-lg" />
