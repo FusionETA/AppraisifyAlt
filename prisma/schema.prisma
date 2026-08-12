@@ -42,6 +42,12 @@ model User {
   role           UserRole   @default(EMPLOYEE)
   status         UserStatus @default(invited)
 
+  /// Free-text job title, shown as "position" on the admin employees table
+  /// and snapshotted onto `Appraisal.role` when a cycle starts. AltomateHR
+  /// keeps this on a separate `EmployeeProfile` row; AppraisifyAlt has no
+  /// equivalent module, so it lives directly on `User`.
+  title String?
+
   /// Null for SSO-only / not-yet-activated accounts.
   passwordHash String?
 
