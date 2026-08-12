@@ -34,8 +34,8 @@ export async function authenticateUser({
   }
 
   if (!user.passwordHash) {
-    // SSO-only account (or not yet activated) — a generic "invalid
-    // credentials" message here would send the user down a dead end.
+    // SSO-only account — a generic "invalid credentials" message here
+    // would send the user down a dead end.
     return { success: false, message: "This account signs in via AltomateHR only." }
   }
 
@@ -44,7 +44,7 @@ export async function authenticateUser({
   }
 
   if (user.status !== "active") {
-    return { success: false, message: "This account hasn't been activated yet. Check your invite email." }
+    return { success: false, message: "This account has been deactivated. Contact your administrator." }
   }
 
   return {

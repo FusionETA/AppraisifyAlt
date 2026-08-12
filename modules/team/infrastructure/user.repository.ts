@@ -2,6 +2,7 @@ import "server-only"
 
 import { getPrismaClient } from "@/lib/prisma"
 
+import type { AssignableRole } from "@/modules/team/domain/models"
 import type { TeamMemberRow } from "@/modules/team/domain/models"
 
 function getPrisma() {
@@ -33,13 +34,17 @@ export const userRepository = {
     return prisma.user.findUnique({ where: { email } })
   },
 
-  async createInvited(input: {
+  async findByIdForOrg(id: string, orgId: string) {
+    const prisma = getPrisma()
+    return prisma.user.findFirst({ where: { id, organizationId: orgId } })
+  },
+
+  async createActive(input: {
     orgId: string
     email: string
     name: string
-    role: "EMPLOYEE" | "SUPERVISOR" | "ADMIN"
-    activationTokenHash: string
-    activationTokenExpiresAt: Date
+    role: AssignableRole
+    passwordHash: string
   }) {
     const prisma = getPrisma()
     return prisma.user.create({
@@ -48,41 +53,29 @@ export const userRepository = {
         email: input.email,
         name: input.name,
         role: input.role,
-        status: "invited",
-        activationTokenHash: input.activationTokenHash,
-        activationTokenExpiresAt: input.activationTokenExpiresAt,
-      },
-    })
-  },
-
-  async findInvitedByIdForOrg(id: string, orgId: string) {
-    const prisma = getPrisma()
-    return prisma.user.findFirst({ where: { id, organizationId: orgId, status: "invited" } })
-  },
-
-  async setActivationToken(userId: string, hash: string, expiresAt: Date): Promise<void> {
-    const prisma = getPrisma()
-    await prisma.user.update({
-      where: { id: userId },
-      data: { activationTokenHash: hash, activationTokenExpiresAt: expiresAt },
-    })
-  },
-
-  async findByActivationTokenHash(hash: string) {
-    const prisma = getPrisma()
-    return prisma.user.findUnique({ where: { activationTokenHash: hash } })
-  },
-
-  async activate(userId: string, passwordHash: string): Promise<void> {
-    const prisma = getPrisma()
-    await prisma.user.update({
-      where: { id: userId },
-      data: {
         status: "active",
-        passwordHash,
-        activationTokenHash: null,
-        activationTokenExpiresAt: null,
+        passwordHash: input.passwordHash,
       },
     })
+  },
+
+  async updateProfile(userId: string, input: { name: string; email: string }): Promise<void> {
+    const prisma = getPrisma()
+    await prisma.user.update({ where: { id: userId }, data: { name: input.name, email: input.email } })
+  },
+
+  async updateRole(userId: string, role: AssignableRole): Promise<void> {
+    const prisma = getPrisma()
+    await prisma.user.update({ where: { id: userId }, data: { role } })
+  },
+
+  async setStatus(userId: string, status: "active" | "deactivated"): Promise<void> {
+    const prisma = getPrisma()
+    await prisma.user.update({ where: { id: userId }, data: { status } })
+  },
+
+  async setPasswordHash(userId: string, passwordHash: string): Promise<void> {
+    const prisma = getPrisma()
+    await prisma.user.update({ where: { id: userId }, data: { passwordHash } })
   },
 }

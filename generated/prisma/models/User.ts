@@ -33,8 +33,6 @@ export type UserMinAggregateOutputType = {
   status: $Enums.UserStatus | null
   title: string | null
   passwordHash: string | null
-  activationTokenHash: string | null
-  activationTokenExpiresAt: Date | null
   altomateUserId: string | null
   altomateOrgId: string | null
   createdAt: Date | null
@@ -50,8 +48,6 @@ export type UserMaxAggregateOutputType = {
   status: $Enums.UserStatus | null
   title: string | null
   passwordHash: string | null
-  activationTokenHash: string | null
-  activationTokenExpiresAt: Date | null
   altomateUserId: string | null
   altomateOrgId: string | null
   createdAt: Date | null
@@ -67,8 +63,6 @@ export type UserCountAggregateOutputType = {
   status: number
   title: number
   passwordHash: number
-  activationTokenHash: number
-  activationTokenExpiresAt: number
   altomateUserId: number
   altomateOrgId: number
   createdAt: number
@@ -86,8 +80,6 @@ export type UserMinAggregateInputType = {
   status?: true
   title?: true
   passwordHash?: true
-  activationTokenHash?: true
-  activationTokenExpiresAt?: true
   altomateUserId?: true
   altomateOrgId?: true
   createdAt?: true
@@ -103,8 +95,6 @@ export type UserMaxAggregateInputType = {
   status?: true
   title?: true
   passwordHash?: true
-  activationTokenHash?: true
-  activationTokenExpiresAt?: true
   altomateUserId?: true
   altomateOrgId?: true
   createdAt?: true
@@ -120,8 +110,6 @@ export type UserCountAggregateInputType = {
   status?: true
   title?: true
   passwordHash?: true
-  activationTokenHash?: true
-  activationTokenExpiresAt?: true
   altomateUserId?: true
   altomateOrgId?: true
   createdAt?: true
@@ -210,8 +198,6 @@ export type UserGroupByOutputType = {
   status: $Enums.UserStatus
   title: string | null
   passwordHash: string | null
-  activationTokenHash: string | null
-  activationTokenExpiresAt: Date | null
   altomateUserId: string | null
   altomateOrgId: string | null
   createdAt: Date
@@ -248,8 +234,6 @@ export type UserWhereInput = {
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  activationTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
-  activationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   altomateUserId?: Prisma.StringNullableFilter<"User"> | string | null
   altomateOrgId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -271,8 +255,6 @@ export type UserOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  activationTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  activationTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   altomateUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -289,7 +271,6 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
-  activationTokenHash?: string
   altomateUserId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
@@ -300,7 +281,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  activationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   altomateOrgId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -310,7 +290,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   appraisalsAsPartner?: Prisma.AppraisalListRelationFilter
   appraisalsCreated?: Prisma.AppraisalListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
-}, "id" | "email" | "activationTokenHash" | "altomateUserId">
+}, "id" | "email" | "altomateUserId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -321,8 +301,6 @@ export type UserOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  activationTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  activationTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   altomateUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -344,8 +322,6 @@ export type UserScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  activationTokenHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  activationTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   altomateUserId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   altomateOrgId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -360,8 +336,6 @@ export type UserCreateInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -383,8 +357,6 @@ export type UserUncheckedCreateInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -404,8 +376,6 @@ export type UserUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -427,8 +397,6 @@ export type UserUncheckedUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -449,8 +417,6 @@ export type UserCreateManyInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -465,8 +431,6 @@ export type UserUpdateManyMutationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,8 +446,6 @@ export type UserUncheckedUpdateManyInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -515,8 +477,6 @@ export type UserCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   title?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  activationTokenHash?: Prisma.SortOrder
-  activationTokenExpiresAt?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -532,8 +492,6 @@ export type UserMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   title?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  activationTokenHash?: Prisma.SortOrder
-  activationTokenExpiresAt?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -549,8 +507,6 @@ export type UserMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   title?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  activationTokenHash?: Prisma.SortOrder
-  activationTokenExpiresAt?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -614,10 +570,6 @@ export type EnumUserStatusFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type UserCreateNestedOneWithoutNotificationsInput = {
@@ -698,8 +650,6 @@ export type UserCreateWithoutOrganizationInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -719,8 +669,6 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -770,8 +718,6 @@ export type UserScalarWhereInput = {
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  activationTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
-  activationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   altomateUserId?: Prisma.StringNullableFilter<"User"> | string | null
   altomateOrgId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -786,8 +732,6 @@ export type UserCreateWithoutNotificationsInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -808,8 +752,6 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -844,8 +786,6 @@ export type UserUpdateWithoutNotificationsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -866,8 +806,6 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -886,8 +824,6 @@ export type UserCreateWithoutAppraisalsAsRevieweeInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -908,8 +844,6 @@ export type UserUncheckedCreateWithoutAppraisalsAsRevieweeInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -933,8 +867,6 @@ export type UserCreateWithoutAppraisalsAsReviewerInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -955,8 +887,6 @@ export type UserUncheckedCreateWithoutAppraisalsAsReviewerInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -980,8 +910,6 @@ export type UserCreateWithoutAppraisalsAsPartnerInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -1002,8 +930,6 @@ export type UserUncheckedCreateWithoutAppraisalsAsPartnerInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -1027,8 +953,6 @@ export type UserCreateWithoutAppraisalsCreatedInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -1049,8 +973,6 @@ export type UserUncheckedCreateWithoutAppraisalsCreatedInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -1085,8 +1007,6 @@ export type UserUpdateWithoutAppraisalsAsRevieweeInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1107,8 +1027,6 @@ export type UserUncheckedUpdateWithoutAppraisalsAsRevieweeInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1138,8 +1056,6 @@ export type UserUpdateWithoutAppraisalsAsReviewerInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1160,8 +1076,6 @@ export type UserUncheckedUpdateWithoutAppraisalsAsReviewerInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1191,8 +1105,6 @@ export type UserUpdateWithoutAppraisalsAsPartnerInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1213,8 +1125,6 @@ export type UserUncheckedUpdateWithoutAppraisalsAsPartnerInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1244,8 +1154,6 @@ export type UserUpdateWithoutAppraisalsCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1266,8 +1174,6 @@ export type UserUncheckedUpdateWithoutAppraisalsCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1286,8 +1192,6 @@ export type UserCreateManyOrganizationInput = {
   status?: $Enums.UserStatus
   title?: string | null
   passwordHash?: string | null
-  activationTokenHash?: string | null
-  activationTokenExpiresAt?: Date | string | null
   altomateUserId?: string | null
   altomateOrgId?: string | null
   createdAt?: Date | string
@@ -1302,8 +1206,6 @@ export type UserUpdateWithoutOrganizationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1323,8 +1225,6 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1344,8 +1244,6 @@ export type UserUncheckedUpdateManyWithoutOrganizationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1428,8 +1326,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   title?: boolean
   passwordHash?: boolean
-  activationTokenHash?: boolean
-  activationTokenExpiresAt?: boolean
   altomateUserId?: boolean
   altomateOrgId?: boolean
   createdAt?: boolean
@@ -1454,15 +1350,13 @@ export type UserSelectScalar = {
   status?: boolean
   title?: boolean
   passwordHash?: boolean
-  activationTokenHash?: boolean
-  activationTokenExpiresAt?: boolean
   altomateUserId?: boolean
   altomateOrgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "email" | "name" | "role" | "status" | "title" | "passwordHash" | "activationTokenHash" | "activationTokenExpiresAt" | "altomateUserId" | "altomateOrgId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "email" | "name" | "role" | "status" | "title" | "passwordHash" | "altomateUserId" | "altomateOrgId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   appraisalsAsReviewee?: boolean | Prisma.User$appraisalsAsRevieweeArgs<ExtArgs>
@@ -1498,16 +1392,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
      */
     title: string | null
     /**
-     * Null for SSO-only / not-yet-activated accounts.
+     * Null for SSO-only accounts.
      */
     passwordHash: string | null
-    /**
-     * Single-use activation token (invite email link) — hashed, never
-     * stored raw. Not Redis: keeps account activation independent of any
-     * cache/queue infrastructure being configured.
-     */
-    activationTokenHash: string | null
-    activationTokenExpiresAt: Date | null
     /**
      * Set once this account has been matched/linked to an AltomateHR
      * identity via the SSO bridge (Phase F). Null until then.
@@ -1899,8 +1786,6 @@ export interface UserFieldRefs {
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly title: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
-  readonly activationTokenHash: Prisma.FieldRef<"User", 'String'>
-  readonly activationTokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly altomateUserId: Prisma.FieldRef<"User", 'String'>
   readonly altomateOrgId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>

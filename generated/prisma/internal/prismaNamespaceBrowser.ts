@@ -95,8 +95,6 @@ export const UserScalarFieldEnum = {
   status: 'status',
   title: 'title',
   passwordHash: 'passwordHash',
-  activationTokenHash: 'activationTokenHash',
-  activationTokenExpiresAt: 'activationTokenExpiresAt',
   altomateUserId: 'altomateUserId',
   altomateOrgId: 'altomateOrgId',
   createdAt: 'createdAt',
@@ -226,7 +224,6 @@ export const UserOrderByRelevanceFieldEnum = {
   name: 'name',
   title: 'title',
   passwordHash: 'passwordHash',
-  activationTokenHash: 'activationTokenHash',
   altomateUserId: 'altomateUserId',
   altomateOrgId: 'altomateOrgId'
 } as const

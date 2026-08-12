@@ -5,10 +5,16 @@ export type TeamMemberRow = {
   name: string
   email: string
   role: AppRole
-  status: "invited" | "active"
+  status: "active" | "deactivated"
   createdAt: string
 }
 
-/** Roles an admin can hand out via invite. OWNER is not self-service. */
-export const inviteableRoles = ["EMPLOYEE", "SUPERVISOR", "ADMIN"] as const
-export type InviteableRole = (typeof inviteableRoles)[number]
+/** Roles an admin can assign. OWNER is not self-service. */
+export const assignableRoles = ["EMPLOYEE", "SUPERVISOR", "ADMIN"] as const
+export type AssignableRole = (typeof assignableRoles)[number]
+
+/** `dana@company.com` -> `dana123`. Shown once to the admin after create/reset. */
+export function defaultPasswordFor(email: string): string {
+  const localPart = email.split("@")[0] ?? email
+  return `${localPart}123`
+}

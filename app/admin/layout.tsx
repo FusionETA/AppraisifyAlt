@@ -23,7 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 Appraisals
               </Link>
               <Link href="/admin/team" className="hover:text-foreground">
-                Team
+                Employees
               </Link>
             </nav>
           </div>
