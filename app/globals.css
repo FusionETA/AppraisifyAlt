@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Appraisify blue palette ────────────────────────────────
+       Brand anchor: #136dec → hsl(215 85% 50%)
+    ─────────────────────────────────────────────────────────── */
+    --background: 204 20% 95%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 215 85% 50%;           /* #136dec */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 30% 95%;
+    --secondary-foreground: 215 40% 25%;
+    --muted: 210 20% 95%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 215 30% 95%;
+    --accent-foreground: 215 40% 25%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 215 85% 50%;
+    --radius: 1rem;
+    --surface: 204 20% 95%;
+    --surface-container: 210 18% 93%;
+    --surface-container-low: 210 16% 95%;
+    --surface-container-high: 210 14% 90%;
+    --surface-container-lowest: 0 0% 100%;
+    --tertiary: 38 92% 50%;
+    --tertiary-foreground: 0 0% 100%;
+    --tertiary-fixed: 38 100% 90%;
+    --success: 160 84% 30%;
+    --success-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 222 40% 7%;
+    --foreground: 210 20% 96%;
+    --card: 222 35% 11%;
+    --card-foreground: 210 20% 96%;
+    --popover: 222 35% 11%;
+    --popover-foreground: 210 20% 96%;
+    --primary: 215 80% 65%;
+    --primary-foreground: 222 55% 8%;
+    --secondary: 215 28% 20%;
+    --secondary-foreground: 215 60% 88%;
+    --muted: 222 22% 16%;
+    --muted-foreground: 215 16% 66%;
+    --accent: 215 28% 20%;
+    --accent-foreground: 215 60% 88%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 22% 20%;
+    --input: 222 22% 20%;
+    --ring: 215 80% 65%;
+    --surface: 222 40% 7%;
+    --surface-container: 222 32% 10%;
+    --surface-container-low: 222 28% 13%;
+    --surface-container-high: 222 22% 16%;
+    --surface-container-lowest: 222 25% 19%;
+    --tertiary: 38 85% 60%;
+    --tertiary-foreground: 38 60% 10%;
+    --tertiary-fixed: 38 40% 22%;
+    --success: 160 72% 45%;
+    --success-foreground: 160 100% 6%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body), "Manrope", sans-serif;
+  }
+}
