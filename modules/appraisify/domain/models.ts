@@ -383,7 +383,7 @@ export type AdminAppraisalHistoryRow = {
 }
 
 /** Admin dashboard bag — cycle stats + history. Per-employee roster (account +
- * appraisal status) lives in modules/team, and reviewer/template candidates
+ * appraisal status) lives in modules/identity, and reviewer/template candidates
  * are fetched directly by the Start Appraisal page. */
 export type AdminDashboardData = {
   stats: { active: number; complete: number }

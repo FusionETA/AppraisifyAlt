@@ -27,14 +27,11 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   organizationId: string | null
+  altomateUserId: string | null
   email: string | null
   name: string | null
   role: $Enums.UserRole | null
-  status: $Enums.UserStatus | null
   title: string | null
-  passwordHash: string | null
-  altomateUserId: string | null
-  altomateOrgId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,14 +39,11 @@ export type UserMinAggregateOutputType = {
 export type UserMaxAggregateOutputType = {
   id: string | null
   organizationId: string | null
+  altomateUserId: string | null
   email: string | null
   name: string | null
   role: $Enums.UserRole | null
-  status: $Enums.UserStatus | null
   title: string | null
-  passwordHash: string | null
-  altomateUserId: string | null
-  altomateOrgId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,14 +51,11 @@ export type UserMaxAggregateOutputType = {
 export type UserCountAggregateOutputType = {
   id: number
   organizationId: number
+  altomateUserId: number
   email: number
   name: number
   role: number
-  status: number
   title: number
-  passwordHash: number
-  altomateUserId: number
-  altomateOrgId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,14 +65,11 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   organizationId?: true
+  altomateUserId?: true
   email?: true
   name?: true
   role?: true
-  status?: true
   title?: true
-  passwordHash?: true
-  altomateUserId?: true
-  altomateOrgId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -89,14 +77,11 @@ export type UserMinAggregateInputType = {
 export type UserMaxAggregateInputType = {
   id?: true
   organizationId?: true
+  altomateUserId?: true
   email?: true
   name?: true
   role?: true
-  status?: true
   title?: true
-  passwordHash?: true
-  altomateUserId?: true
-  altomateOrgId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,14 +89,11 @@ export type UserMaxAggregateInputType = {
 export type UserCountAggregateInputType = {
   id?: true
   organizationId?: true
+  altomateUserId?: true
   email?: true
   name?: true
   role?: true
-  status?: true
   title?: true
-  passwordHash?: true
-  altomateUserId?: true
-  altomateOrgId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -192,14 +174,11 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role: $Enums.UserRole
-  status: $Enums.UserStatus
   title: string | null
-  passwordHash: string | null
-  altomateUserId: string | null
-  altomateOrgId: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -228,14 +207,11 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   organizationId?: Prisma.StringFilter<"User"> | string
+  altomateUserId?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  altomateUserId?: Prisma.StringNullableFilter<"User"> | string | null
-  altomateOrgId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
@@ -249,14 +225,11 @@ export type UserWhereInput = {
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
+  altomateUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  altomateUserId?: Prisma.SortOrderInput | Prisma.SortOrder
-  altomateOrgId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
@@ -270,18 +243,15 @@ export type UserOrderByWithRelationInput = {
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
   altomateUserId?: string
+  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   organizationId?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  altomateOrgId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
@@ -290,19 +260,16 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   appraisalsAsPartner?: Prisma.AppraisalListRelationFilter
   appraisalsCreated?: Prisma.AppraisalListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
-}, "id" | "email" | "altomateUserId">
+}, "id" | "altomateUserId" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
+  altomateUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  altomateUserId?: Prisma.SortOrderInput | Prisma.SortOrder
-  altomateOrgId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -316,28 +283,22 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   organizationId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  altomateUserId?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
-  status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  altomateUserId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  altomateOrgId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
@@ -351,14 +312,11 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
@@ -370,14 +328,11 @@ export type UserUncheckedCreateInput = {
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
@@ -391,14 +346,11 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
@@ -411,28 +363,22 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -440,14 +386,11 @@ export type UserUpdateManyMutationInput = {
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -471,14 +414,11 @@ export type UserOrderByRelevanceInput = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
+  altomateUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
-  altomateUserId?: Prisma.SortOrder
-  altomateOrgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -486,14 +426,11 @@ export type UserCountOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
+  altomateUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
-  altomateUserId?: Prisma.SortOrder
-  altomateOrgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -501,14 +438,11 @@ export type UserMaxOrderByAggregateInput = {
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
+  altomateUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
-  altomateUserId?: Prisma.SortOrder
-  altomateOrgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -562,10 +496,6 @@ export type UserUncheckedUpdateManyWithoutOrganizationNestedInput = {
 
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
-}
-
-export type EnumUserStatusFieldUpdateOperationsInput = {
-  set?: $Enums.UserStatus
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -644,14 +574,11 @@ export type UserUpdateOneRequiredWithoutAppraisalsCreatedNestedInput = {
 
 export type UserCreateWithoutOrganizationInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
@@ -663,14 +590,11 @@ export type UserCreateWithoutOrganizationInput = {
 
 export type UserUncheckedCreateWithoutOrganizationInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
@@ -712,28 +636,22 @@ export type UserScalarWhereInput = {
   NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   organizationId?: Prisma.StringFilter<"User"> | string
+  altomateUserId?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   title?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
-  altomateUserId?: Prisma.StringNullableFilter<"User"> | string | null
-  altomateOrgId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
 export type UserCreateWithoutNotificationsInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
@@ -746,14 +664,11 @@ export type UserCreateWithoutNotificationsInput = {
 export type UserUncheckedCreateWithoutNotificationsInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
@@ -780,14 +695,11 @@ export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
 
 export type UserUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
@@ -800,14 +712,11 @@ export type UserUpdateWithoutNotificationsInput = {
 export type UserUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
@@ -818,14 +727,11 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
 
 export type UserCreateWithoutAppraisalsAsRevieweeInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
@@ -838,14 +744,11 @@ export type UserCreateWithoutAppraisalsAsRevieweeInput = {
 export type UserUncheckedCreateWithoutAppraisalsAsRevieweeInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
@@ -861,14 +764,11 @@ export type UserCreateOrConnectWithoutAppraisalsAsRevieweeInput = {
 
 export type UserCreateWithoutAppraisalsAsReviewerInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
@@ -881,14 +781,11 @@ export type UserCreateWithoutAppraisalsAsReviewerInput = {
 export type UserUncheckedCreateWithoutAppraisalsAsReviewerInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
@@ -904,14 +801,11 @@ export type UserCreateOrConnectWithoutAppraisalsAsReviewerInput = {
 
 export type UserCreateWithoutAppraisalsAsPartnerInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
@@ -924,14 +818,11 @@ export type UserCreateWithoutAppraisalsAsPartnerInput = {
 export type UserUncheckedCreateWithoutAppraisalsAsPartnerInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
@@ -947,14 +838,11 @@ export type UserCreateOrConnectWithoutAppraisalsAsPartnerInput = {
 
 export type UserCreateWithoutAppraisalsCreatedInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
@@ -967,14 +855,11 @@ export type UserCreateWithoutAppraisalsCreatedInput = {
 export type UserUncheckedCreateWithoutAppraisalsCreatedInput = {
   id?: string
   organizationId: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
@@ -1001,14 +886,11 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsAsRevieweeInput = {
 
 export type UserUpdateWithoutAppraisalsAsRevieweeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
@@ -1021,14 +903,11 @@ export type UserUpdateWithoutAppraisalsAsRevieweeInput = {
 export type UserUncheckedUpdateWithoutAppraisalsAsRevieweeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1050,14 +929,11 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsAsReviewerInput = {
 
 export type UserUpdateWithoutAppraisalsAsReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
@@ -1070,14 +946,11 @@ export type UserUpdateWithoutAppraisalsAsReviewerInput = {
 export type UserUncheckedUpdateWithoutAppraisalsAsReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
@@ -1099,14 +972,11 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsAsPartnerInput = {
 
 export type UserUpdateWithoutAppraisalsAsPartnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
@@ -1119,14 +989,11 @@ export type UserUpdateWithoutAppraisalsAsPartnerInput = {
 export type UserUncheckedUpdateWithoutAppraisalsAsPartnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
@@ -1148,14 +1015,11 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsCreatedInput = {
 
 export type UserUpdateWithoutAppraisalsCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
@@ -1168,14 +1032,11 @@ export type UserUpdateWithoutAppraisalsCreatedInput = {
 export type UserUncheckedUpdateWithoutAppraisalsCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
@@ -1186,28 +1047,22 @@ export type UserUncheckedUpdateWithoutAppraisalsCreatedInput = {
 
 export type UserCreateManyOrganizationInput = {
   id?: string
+  altomateUserId: string
   email: string
   name: string
   role?: $Enums.UserRole
-  status?: $Enums.UserStatus
   title?: string | null
-  passwordHash?: string | null
-  altomateUserId?: string | null
-  altomateOrgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
@@ -1219,14 +1074,11 @@ export type UserUpdateWithoutOrganizationInput = {
 
 export type UserUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
@@ -1238,14 +1090,11 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
 
 export type UserUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  altomateOrgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1320,14 +1169,11 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   organizationId?: boolean
+  altomateUserId?: boolean
   email?: boolean
   name?: boolean
   role?: boolean
-  status?: boolean
   title?: boolean
-  passwordHash?: boolean
-  altomateUserId?: boolean
-  altomateOrgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1344,19 +1190,16 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type UserSelectScalar = {
   id?: boolean
   organizationId?: boolean
+  altomateUserId?: boolean
   email?: boolean
   name?: boolean
   role?: boolean
-  status?: boolean
   title?: boolean
-  passwordHash?: boolean
-  altomateUserId?: boolean
-  altomateOrgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "email" | "name" | "role" | "status" | "title" | "passwordHash" | "altomateUserId" | "altomateOrgId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "altomateUserId" | "email" | "name" | "role" | "title" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   appraisalsAsReviewee?: boolean | Prisma.User$appraisalsAsRevieweeArgs<ExtArgs>
@@ -1380,10 +1223,15 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     organizationId: string
+    /**
+     * The join key back to AltomateHR's own user id. Every row exists
+     * because it was synced from AltomateHR (mocked) — there are no local
+     * credentials or locally-managed accounts.
+     */
+    altomateUserId: string
     email: string
     name: string
     role: $Enums.UserRole
-    status: $Enums.UserStatus
     /**
      * Free-text job title, shown as "position" on the admin employees table
      * and snapshotted onto `Appraisal.role` when a cycle starts. AltomateHR
@@ -1391,16 +1239,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
      * equivalent module, so it lives directly on `User`.
      */
     title: string | null
-    /**
-     * Null for SSO-only accounts.
-     */
-    passwordHash: string | null
-    /**
-     * Set once this account has been matched/linked to an AltomateHR
-     * identity via the SSO bridge (Phase F). Null until then.
-     */
-    altomateUserId: string | null
-    altomateOrgId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1780,14 +1618,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly organizationId: Prisma.FieldRef<"User", 'String'>
+  readonly altomateUserId: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
-  readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly title: Prisma.FieldRef<"User", 'String'>
-  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
-  readonly altomateUserId: Prisma.FieldRef<"User", 'String'>
-  readonly altomateOrgId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

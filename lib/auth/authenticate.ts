@@ -1,15 +1,55 @@
 import "server-only"
 
+import { verifyAltomateCredentials } from "@/lib/altomatehr/client"
+import type { AltomateVerifiedIdentity } from "@/lib/altomatehr/types"
 import { getPrismaClient } from "@/lib/prisma"
-import { verifyPassword } from "@/lib/auth/password"
 import type { SessionUser } from "@/lib/auth/types"
 import { buildInitials } from "@/lib/utils"
+import { identityRepository } from "@/modules/identity/infrastructure/identity.repository"
 
 export type AuthenticateResult =
   | { success: true; user: SessionUser }
   | { success: false; message: string }
 
-/** Local email + password login. Admin-invited/activated accounts only. */
+/**
+ * Upserts the local Organization/User cache by AltomateHR's own ids and
+ * builds a SessionUser from that local row, so every `Appraisal` FK always
+ * has a valid local target. Shared by the password login path below and
+ * the "Launch Appraisify" ticket callback (`app/auth/altomate-callback`).
+ */
+export async function buildSessionUserFromAltomateIdentity(
+  identity: AltomateVerifiedIdentity,
+): Promise<SessionUser> {
+  const organization = await identityRepository.upsertOrganizationFromAltomate({
+    altomateOrgId: identity.organizationId,
+    name: identity.organizationName,
+  })
+  const user = await identityRepository.upsertUserFromAltomate({
+    altomateUserId: identity.id,
+    organizationId: organization.id,
+    email: identity.email,
+    name: identity.name,
+    role: identity.role,
+  })
+
+  return {
+    userId: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    initials: buildInitials(user.name),
+    organizationId: organization.id,
+    organizationName: organization.name,
+    altomateOrgId: organization.altomateOrgId,
+  }
+}
+
+/**
+ * Login is verified against AltomateHR (mocked — see `lib/altomatehr/`).
+ * On success the local `Organization`/`User` cache is upserted by
+ * AltomateHR's own ids, and the session is built from that local row so
+ * every `Appraisal` FK always has a valid local target.
+ */
 export async function authenticateUser({
   email,
   password,
@@ -24,39 +64,11 @@ export async function authenticateUser({
     return { success: false, message: "Database is not configured. Contact your administrator." }
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: normalizedEmail },
-    include: { organization: true },
-  })
-
-  if (!user) {
+  const result = await verifyAltomateCredentials(normalizedEmail, password)
+  if (!result.ok) {
     return { success: false, message: "Invalid email or password." }
   }
 
-  if (!user.passwordHash) {
-    // SSO-only account — a generic "invalid credentials" message here
-    // would send the user down a dead end.
-    return { success: false, message: "This account signs in via AltomateHR only." }
-  }
-
-  if (!verifyPassword(password, user.passwordHash)) {
-    return { success: false, message: "Invalid email or password." }
-  }
-
-  if (user.status !== "active") {
-    return { success: false, message: "This account has been deactivated. Contact your administrator." }
-  }
-
-  return {
-    success: true,
-    user: {
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      initials: buildInitials(user.name),
-      organizationId: user.organizationId,
-      organizationName: user.organization.name,
-    },
-  }
+  const user = await buildSessionUserFromAltomateIdentity(result.identity)
+  return { success: true, user }
 }

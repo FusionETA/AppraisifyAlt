@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 
 import { getCurrentSession } from "@/lib/auth/session"
 import { getAdminDashboardData } from "@/modules/appraisify/application/services/appraisal-page-data.service"
-import { getEmployeeRosterData } from "@/modules/team/application/services/team.service"
+import { getEmployeeRosterData } from "@/modules/identity/application/services/identity.service"
 
 import { AdminDashboardClient } from "./dashboard-client"
 

@@ -10,9 +10,9 @@ export type SessionUser = {
   initials: string
   organizationId: string
   organizationName: string
-  /// True when this session was minted via "Sign in with AltomateHR"
-  /// (Phase F) rather than a local password login.
-  loggedInViaSso?: boolean
+  /// AltomateHR's own org id — lets `syncEmployeesFromAltomate` refresh the
+  /// roster without an extra DB round-trip to resolve it.
+  altomateOrgId: string
 }
 
 export type AuthenticatedSession = SessionUser & {

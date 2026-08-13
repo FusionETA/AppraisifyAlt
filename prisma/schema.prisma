@@ -11,9 +11,14 @@ datasource db {
 
 model Organization {
   id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  /// The join key back to AltomateHR's own organization id. Identity is
+  /// sourced from AltomateHR (mocked in `lib/altomatehr/`); this row is a
+  /// local cache, not an authoritative account store.
+  altomateOrgId String @unique
+  name          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   users               User[]
   appraisals          Appraisal[]
@@ -29,32 +34,23 @@ enum UserRole {
   OWNER
 }
 
-enum UserStatus {
-  active
-  deactivated
-}
-
 model User {
-  id             String     @id @default(cuid())
+  id             String   @id @default(cuid())
   organizationId String
-  email          String     @unique
+
+  /// The join key back to AltomateHR's own user id. Every row exists
+  /// because it was synced from AltomateHR (mocked) — there are no local
+  /// credentials or locally-managed accounts.
+  altomateUserId String   @unique
+  email          String   @unique
   name           String
-  role           UserRole   @default(EMPLOYEE)
-  status         UserStatus @default(active)
+  role           UserRole @default(EMPLOYEE)
 
   /// Free-text job title, shown as "position" on the admin employees table
   /// and snapshotted onto `Appraisal.role` when a cycle starts. AltomateHR
   /// keeps this on a separate `EmployeeProfile` row; AppraisifyAlt has no
   /// equivalent module, so it lives directly on `User`.
   title String?
-
-  /// Null for SSO-only accounts.
-  passwordHash String?
-
-  /// Set once this account has been matched/linked to an AltomateHR
-  /// identity via the SSO bridge (Phase F). Null until then.
-  altomateUserId String? @unique
-  altomateOrgId  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

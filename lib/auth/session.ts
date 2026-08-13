@@ -20,7 +20,7 @@ const sessionSchema = z.object({
   initials: z.string().min(1),
   organizationId: z.string().min(1),
   organizationName: z.string().min(1),
-  loggedInViaSso: z.boolean().optional(),
+  altomateOrgId: z.string().min(1),
   expiresAt: z.number().int().positive(),
 })
 

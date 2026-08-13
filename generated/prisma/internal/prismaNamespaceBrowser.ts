@@ -78,6 +78,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const OrganizationScalarFieldEnum = {
   id: 'id',
+  altomateOrgId: 'altomateOrgId',
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -89,14 +90,11 @@ export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[k
 export const UserScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
+  altomateUserId: 'altomateUserId',
   email: 'email',
   name: 'name',
   role: 'role',
-  status: 'status',
   title: 'title',
-  passwordHash: 'passwordHash',
-  altomateUserId: 'altomateUserId',
-  altomateOrgId: 'altomateOrgId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -203,6 +201,7 @@ export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 export const OrganizationOrderByRelevanceFieldEnum = {
   id: 'id',
+  altomateOrgId: 'altomateOrgId',
   name: 'name'
 } as const
 
@@ -220,12 +219,10 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 export const UserOrderByRelevanceFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
+  altomateUserId: 'altomateUserId',
   email: 'email',
   name: 'name',
-  title: 'title',
-  passwordHash: 'passwordHash',
-  altomateUserId: 'altomateUserId',
-  altomateOrgId: 'altomateOrgId'
+  title: 'title'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]

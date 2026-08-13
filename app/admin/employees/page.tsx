@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation"
 
 import { requirePortalSession } from "@/lib/auth/session"
-import { getTeamPageData } from "@/modules/team/application/services/team.service"
+import { getEmployeeDirectoryData } from "@/modules/identity/application/services/identity.service"
 
-import { TeamClient } from "./roster-client"
+import { DirectoryClient } from "./roster-client"
 
 export default async function EmployeesPage() {
   await requirePortalSession("ADMIN")
-  const data = await getTeamPageData()
+  const data = await getEmployeeDirectoryData()
   if (!data) redirect("/login")
-  return <TeamClient members={data.members} />
+  return <DirectoryClient members={data.members} />
 }

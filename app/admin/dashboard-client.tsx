@@ -13,7 +13,7 @@ import {
   type AdminDashboardData,
   type AppraisalStage,
 } from "@/modules/appraisify/domain/models"
-import type { EmployeeRosterRow } from "@/modules/team/domain/models"
+import type { EmployeeRosterRow } from "@/modules/identity/domain/models"
 
 type Tab = "employees" | "history"
 

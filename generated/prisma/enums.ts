@@ -19,14 +19,6 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-export const UserStatus = {
-  active: 'active',
-  deactivated: 'deactivated'
-} as const
-
-export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
-
-
 export const NotificationType = {
   APPRAISAL_PHASE_READY: 'APPRAISAL_PHASE_READY',
   APPRAISAL_COMPLETED: 'APPRAISAL_COMPLETED'

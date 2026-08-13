@@ -3,6 +3,7 @@ import "server-only"
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
 import { appraisalRepository } from "@/modules/appraisify/infrastructure/appraisal.repository"
 import { appraisalTemplateRepository } from "@/modules/appraisify/infrastructure/appraisal-template.repository"
+import { syncEmployeesFromAltomate } from "@/modules/identity/application/services/identity.service"
 import {
   buildCycleLabel,
   phaseAccessFor,
@@ -171,6 +172,8 @@ export async function getStartAppraisalPageData(
   if (!session) return null
   const orgId = resolveActiveOrgId(session)
   if (!orgId) return null
+
+  await syncEmployeesFromAltomate(orgId, session.altomateOrgId)
 
   const [allEmployees, people, templates] = await Promise.all([
     appraisalRepository.listOrgEmployees(orgId),
