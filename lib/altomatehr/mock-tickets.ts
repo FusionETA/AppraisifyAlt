@@ -1,10 +1,10 @@
 /**
- * TODO(real-altomatehr-swap): this file goes away once AltomateHR mints
- * real tickets (`GET /api/sso/appraisify`) and `client.ts`'s
- * `verifyAltomateTicket` calls the real `POST /api/v1/auth/verify-ticket`
- * instead of `redeemMockTicket` below. In-memory only (module-scoped Map,
- * not Redis) — fine for a dev mock, would NOT survive multiple server
- * instances in production.
+ * Local-dev fallback for the ticket flow, active whenever `client.ts`'s
+ * `verifyAltomateTicket` is in mock mode (see `getMode()` there) — kept
+ * permanently alongside `mock-data.ts`, not a temporary shim. In-memory
+ * only (module-scoped Map, not Redis) — fine for a dev mock, would NOT
+ * survive multiple server instances in production; real/stub modes never
+ * touch this file.
  */
 
 type StoredMockTicket = {

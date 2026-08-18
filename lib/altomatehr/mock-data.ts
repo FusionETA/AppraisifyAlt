@@ -1,8 +1,11 @@
 /**
- * TODO(real-altomatehr-swap): this whole file goes away once `./client.ts`
- * calls the real AltomateHR API. Plaintext passwords below are dev-only
- * fixture data, never real credentials — do not follow this pattern for
- * anything backed by an actual account.
+ * Local-dev fallback — active whenever `ALTOMATEHR_API_BASE_URL`/
+ * `ALTOMATEHR_API_TOKEN` are unset (every local dev session, and any
+ * unconfigured deploy) and stub mode isn't on. Not a temporary shim: kept
+ * permanently so local dev never needs real AltomateHR credentials.
+ * Plaintext passwords below are dev-only fixture data, never real
+ * credentials — do not follow this pattern for anything backed by an
+ * actual account.
  */
 import type { AltomateVerifiedIdentity } from "./types"
 

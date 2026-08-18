@@ -1,0 +1,33 @@
+{
+  "data": [
+    {
+      "id": "usr_stub_employee_001",
+      "employeeProfileId": "prof_stub_001",
+      "name": "Stub Employee",
+      "email": "stub.employee@fusioneta.mock",
+      "role": "EMPLOYEE",
+      "employeeId": "EMP-001",
+      "jobTitle": "Software Engineer",
+      "payoutMethod": "bank_transfer",
+      "otPayoutMethod": "bank_transfer",
+      "policy": null,
+      "projects": [],
+      "teams": []
+    },
+    {
+      "id": "usr_stub_supervisor_001",
+      "employeeProfileId": "prof_stub_002",
+      "name": "Stub Supervisor",
+      "email": "stub.supervisor@fusioneta.mock",
+      "role": "SUPERVISOR",
+      "employeeId": "EMP-002",
+      "jobTitle": "Engineering Lead",
+      "payoutMethod": "bank_transfer",
+      "otPayoutMethod": "bank_transfer",
+      "policy": null,
+      "projects": [],
+      "teams": []
+    }
+  ],
+  "pagination": { "total": 3, "limit": 2, "offset": 0, "hasMore": true }
+}
