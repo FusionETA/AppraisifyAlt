@@ -1,6 +1,8 @@
 import { z } from "zod"
 import { type NextRequest, NextResponse } from "next/server"
 
+import { getRequestOrigin } from "@/lib/request-origin"
+
 const SESSION_COOKIE = "appraisifyalt_session"
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7
 const PROTECTED_PREFIXES = ["/employee", "/admin"] as const
@@ -119,7 +121,7 @@ async function decodeSession(token: string) {
 }
 
 function redirectToLogin(request: NextRequest) {
-  return NextResponse.redirect(new URL("/login", request.url))
+  return NextResponse.redirect(new URL("/login", getRequestOrigin(request)))
 }
 
 export async function middleware(request: NextRequest) {
@@ -146,7 +148,7 @@ export async function middleware(request: NextRequest) {
   const allowedBase = ROLE_PATHS[session.role]
   if (!allowedBase || !pathname.startsWith(allowedBase)) {
     const correctBase = ROLE_PATHS[session.role] ?? "/login"
-    return NextResponse.redirect(new URL(correctBase, request.url))
+    return NextResponse.redirect(new URL(correctBase, getRequestOrigin(request)))
   }
 
   const response = NextResponse.next()
