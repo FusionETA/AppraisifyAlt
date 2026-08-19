@@ -1,8 +1,7 @@
 /**
- * Shapes mirror AltomateHR's real API contracts exactly, so swapping the
- * mock client (`./client.ts`) for real `fetch()` calls later is a
- * same-signature drop-in. See `./mock-data.ts` for the fixture this
- * currently reads from.
+ * Shapes mirror AltomateHR's real API contracts exactly. `./client.ts`
+ * resolves either real `fetch()` calls or stub fixtures (`./stubs/`)
+ * behind the same signatures — see `getMode()` there.
  */
 import type { AppRole } from "@/lib/auth/types"
 

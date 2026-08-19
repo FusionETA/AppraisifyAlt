@@ -2,7 +2,6 @@ import { notFound } from "next/navigation"
 
 import { getMode } from "@/lib/altomatehr/client"
 import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
-import { MOCK_ORG_ID, listMockAccountsForOrg } from "@/lib/altomatehr/mock-data"
 
 const STUB_ROLES = [
   { role: "EMPLOYEE", name: "Stub Employee", jobTitle: "Software Engineer" },
@@ -13,14 +12,16 @@ const STUB_ROLES = [
 
 /**
  * Dev-only page — stands in for the AltomateHR-side "Launch Appraisify"
- * button. Each link mints a ticket and lands you signed in via
- * /auth/altomate-callback, exercising the same code path a real
- * AltomateHR redirect would.
+ * button. Each link mints a ticket shaped "stub-role:<ROLE>" and lands
+ * you signed in via /auth/altomate-callback, which lib/altomatehr/
+ * client.ts's stub branch decodes back to the matching fixture — see
+ * stubIdentityByRole there.
  *
- * In stub mode, shows all four stub identities directly (see
- * lib/altomatehr/client.ts's stubIdentityByRole) instead of the
- * mock-data.ts account list, since stub mode ignores which mock account
- * the ticket was minted for anyway.
+ * Only meaningful in stub mode (getMode() === "stub"), which is also
+ * what a totally unconfigured environment defaults to. If real mode is
+ * active instead (ALTOMATEHR_API_BASE_URL/TOKEN set and the stub toggle
+ * off), the stub-role ticket trick doesn't apply — a real AltomateHR
+ * redirect is what's needed there, not this page.
  *
  * 404s unless dev tools are enabled (see lib/altomatehr/dev-tools.ts) —
  * this is an unauthenticated "log in as anyone" page and must stay closed
@@ -35,53 +36,47 @@ export const dynamic = "force-dynamic"
 export default function AltomateLaunchDevPage() {
   if (!isAltomateDevToolsEnabled()) notFound()
 
-  const stubMode = getMode() === "stub"
-  const rows = stubMode
-    ? STUB_ROLES.map((account) => ({
-        key: account.role,
-        name: account.name,
-        jobTitle: account.jobTitle,
-        role: account.role,
-        href: `/dev/altomate-launch/go?stubRole=${account.role}`,
-      }))
-    : listMockAccountsForOrg(MOCK_ORG_ID).map((account) => ({
-        key: account.email,
-        name: account.name,
-        jobTitle: account.jobTitle,
-        role: account.role,
-        href: `/dev/altomate-launch/go?email=${encodeURIComponent(account.email)}`,
-      }))
+  const mode = getMode()
 
   return (
     <div className="mx-auto max-w-md space-y-6 px-4 py-10">
       <div>
-        <h1 className="text-xl font-bold text-foreground">
-          Launch Appraisify ({stubMode ? "stub" : "mock"})
-        </h1>
+        <h1 className="text-xl font-bold text-foreground">Test accounts</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {stubMode
-            ? "Stub mode is on — pick which role's fixture to sign in as."
-            : "Dev-only stand-in for AltomateHR's \"Launch Appraisify\" button. Picks a mock account, mints a mock ticket, and signs you in via the same callback route a real AltomateHR redirect would use."}
+          Dev-only stand-in for AltomateHR&apos;s &quot;Launch Appraisify&quot; button. Signs you
+          in via the same callback route a real AltomateHR redirect would use.
         </p>
       </div>
-      <ul className="divide-y divide-border/60 rounded-xl border border-border/60">
-        {rows.map((row) => (
-          <li key={row.key}>
-            <a
-              href={row.href}
-              className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-surface-low/50"
-            >
-              <span>
-                <span className="font-semibold text-foreground">{row.name}</span>
-                <span className="ml-2 text-muted-foreground">{row.jobTitle}</span>
-              </span>
-              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {row.role}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
+
+      {mode === "real" ? (
+        <div className="rounded-xl border border-border/60 p-4 text-sm text-muted-foreground">
+          Real mode is active (<code>ALTOMATEHR_API_BASE_URL</code>/<code>TOKEN</code> are set) —
+          this page only works in stub mode. Turn stub mode on at{" "}
+          <a href="/dev/altomate-mode" className="underline">
+            /dev/altomate-mode
+          </a>
+          , then come back here.
+        </div>
+      ) : (
+        <ul className="divide-y divide-border/60 rounded-xl border border-border/60">
+          {STUB_ROLES.map((account) => (
+            <li key={account.role}>
+              <a
+                href={`/dev/altomate-launch/go?stubRole=${account.role}`}
+                className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-surface-low/50"
+              >
+                <span>
+                  <span className="font-semibold text-foreground">{account.name}</span>
+                  <span className="ml-2 text-muted-foreground">{account.jobTitle}</span>
+                </span>
+                <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  {account.role}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

@@ -29,6 +29,7 @@ export default function AltomateModeDevPage() {
 
   const mode = getMode()
   const stubOn = process.env.ALTOMATEHR_INTEGRATION_TEST_MODE === "true"
+  const realConfigured = Boolean(process.env.ALTOMATEHR_API_BASE_URL && process.env.ALTOMATEHR_API_TOKEN)
 
   return (
     <div className="mx-auto max-w-md space-y-6 px-4 py-10">
@@ -47,12 +48,12 @@ export default function AltomateModeDevPage() {
           <Badge variant={mode === "stub" ? "success" : "outline"}>{mode}</Badge>
         </div>
         <p className="mt-2 text-xs text-muted-foreground">
-          {mode === "stub" &&
-            "Every call returns static fixtures from lib/altomatehr/stubs/ — zero network calls."}
-          {mode === "real" &&
-            "ALTOMATEHR_API_BASE_URL and ALTOMATEHR_API_TOKEN are set — calling the real AltomateHR API."}
-          {mode === "mock" &&
-            "Neither stub nor real mode is active — falling back to lib/altomatehr/mock-data.ts."}
+          {mode === "stub"
+            ? "Every call returns static fixtures from lib/altomatehr/stubs/ — zero network calls."
+            : "ALTOMATEHR_API_BASE_URL and ALTOMATEHR_API_TOKEN are set — calling the real AltomateHR API."}
+          {mode === "stub" && !realConfigured && !stubOn && (
+            <span> Real credentials aren&apos;t configured here, so this is the default — the toggle below won&apos;t change anything unless real credentials are also set.</span>
+          )}
         </p>
       </div>
 
@@ -64,10 +65,10 @@ export default function AltomateModeDevPage() {
 
       <div className="space-y-1 text-xs text-muted-foreground">
         <p>
-          Stub mode on → log in at <a href="/login" className="underline">/login</a> with any
+          In stub mode: log in at <a href="/login" className="underline">/login</a> with any
           email/password for Stub Admin, or use{" "}
-          <a href="/dev/altomate-launch" className="underline">/dev/altomate-launch</a> for Stub
-          Employee.
+          <a href="/dev/altomate-launch" className="underline">Test accounts</a> for any of the
+          four roles.
         </p>
       </div>
     </div>

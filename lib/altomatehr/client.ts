@@ -1,7 +1,5 @@
 import "server-only"
 
-import { findMockAccountByEmail, listMockAccountsForOrg } from "./mock-data"
-import { redeemMockTicket } from "./mock-tickets"
 import stubEmployeesPage1 from "./stubs/employees-page-1.json"
 import stubEmployeesPage2 from "./stubs/employees-page-2.json"
 import stubVerify from "./stubs/verify.json"
@@ -13,22 +11,21 @@ import type { AltomateEmployee, AltomateVerifiedIdentity } from "./types"
 export type VerifyResult = { ok: true; identity: AltomateVerifiedIdentity } | { ok: false }
 
 /**
- * Identity/roster data comes from one of three places, checked in this
- * order:
- *  1. Stub mode (ALTOMATEHR_INTEGRATION_TEST_MODE=true) — static JSON
- *     fixtures shaped exactly like AltomateHR's real wire format, so the
- *     fetch/parse/pagination logic below runs for real with zero network
- *     dependency. Wins outright over the other two, for predictable CI/
- *     staging behavior regardless of what else is configured.
- *  2. Real mode (ALTOMATEHR_API_BASE_URL + ALTOMATEHR_API_TOKEN both set)
+ * Identity/roster data comes from one of two places:
+ *  1. Real mode (ALTOMATEHR_API_BASE_URL + ALTOMATEHR_API_TOKEN both set)
  *     — the actual AltomateHR API.
- *  3. Mock mode (neither set — the default for local dev and any
- *     unconfigured deploy) — lib/altomatehr/mock-data.ts.
+ *  2. Stub mode — everything else, including both the explicit
+ *     ALTOMATEHR_INTEGRATION_TEST_MODE=true toggle (which wins outright,
+ *     letting you force stub testing even with real credentials also
+ *     configured — see /dev/altomate-mode) and the plain unconfigured
+ *     default (local dev with nothing set). Static JSON fixtures shaped
+ *     exactly like AltomateHR's real wire format, so the fetch/parse/
+ *     pagination logic below runs for real with zero network dependency.
  */
-export function getMode(): "stub" | "real" | "mock" {
+export function getMode(): "stub" | "real" {
   if (process.env.ALTOMATEHR_INTEGRATION_TEST_MODE === "true") return "stub"
   if (process.env.ALTOMATEHR_API_BASE_URL && process.env.ALTOMATEHR_API_TOKEN) return "real"
-  return "mock"
+  return "stub"
 }
 
 type VerifyResponseData = {
@@ -85,23 +82,14 @@ async function postForIdentity(
 export async function verifyAltomateCredentials(email: string, password: string): Promise<VerifyResult> {
   const mode = getMode()
 
-  if (mode === "stub") {
-    const result = stubVerify as { data: VerifyResponseData }
-    return { ok: true, identity: identityFromResponseData(result.data) }
-  }
-
   if (mode === "real") {
     const result = await postForIdentity("/api/v1/auth/verify", { email, password })
     if (!result) return { ok: false }
     return { ok: true, identity: identityFromResponseData(result.data) }
   }
 
-  const account = findMockAccountByEmail(email)
-  if (!account || account.password !== password) {
-    return { ok: false }
-  }
-  const { password: _password, jobTitle: _jobTitle, ...identity } = account
-  return { ok: true, identity }
+  const result = stubVerify as { data: VerifyResponseData }
+  return { ok: true, identity: identityFromResponseData(result.data) }
 }
 
 type EmployeesPageResponse = {
@@ -137,14 +125,6 @@ async function collectAllEmployeePages(
 export async function listAltomateEmployees(organizationId: string): Promise<AltomateEmployee[]> {
   const mode = getMode()
 
-  if (mode === "stub") {
-    const pages = [stubEmployeesPage1, stubEmployeesPage2] as EmployeesPageResponse[]
-    let pageIndex = 0
-    const rows = await collectAllEmployeePages(async () => pages[pageIndex++] ?? null)
-    if (!rows) return []
-    return rows.map((r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, jobTitle: r.jobTitle, organizationId }))
-  }
-
   if (mode === "real") {
     const baseUrl = process.env.ALTOMATEHR_API_BASE_URL
     const token = process.env.ALTOMATEHR_API_TOKEN
@@ -172,27 +152,18 @@ export async function listAltomateEmployees(organizationId: string): Promise<Alt
     return rows.map((r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, jobTitle: r.jobTitle, organizationId }))
   }
 
-  // The real endpoint only ever returns EMPLOYEE/SUPERVISOR — admins/owners
-  // are never appraisal participants, so this is correct, not a gap. Mock
-  // matches that rule; findMockAccountByEmail (login) is unaffected.
-  return listMockAccountsForOrg(organizationId)
-    .filter((a) => a.role === "EMPLOYEE" || a.role === "SUPERVISOR")
-    .map((a) => ({
-      id: a.id,
-      name: a.name,
-      email: a.email,
-      role: a.role,
-      jobTitle: a.jobTitle,
-      organizationId: a.organizationId,
-    }))
+  const pages = [stubEmployeesPage1, stubEmployeesPage2] as EmployeesPageResponse[]
+  let pageIndex = 0
+  const rows = await collectAllEmployeePages(async () => pages[pageIndex++] ?? null)
+  if (!rows) return []
+  return rows.map((r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, jobTitle: r.jobTitle, organizationId }))
 }
 
 /**
  * Dev-only convention: /dev/altomate-launch mints tickets shaped
  * "stub-role:<ROLE>" while stub mode is active, so the launcher can offer
  * all four roles instead of always landing on the same fixed identity.
- * Any other ticket value (including real mock tickets used outside stub
- * mode) falls back to the original Stub Employee fixture.
+ * Any other ticket value falls back to the Stub Employee fixture.
  */
 const STUB_TICKET_ROLE_PREFIX = "stub-role:"
 const stubIdentityByRole: Record<string, { data: VerifyResponseData }> = {
@@ -205,30 +176,15 @@ const stubIdentityByRole: Record<string, { data: VerifyResponseData }> = {
 export async function verifyAltomateTicket(ticket: string): Promise<VerifyResult> {
   const mode = getMode()
 
-  if (mode === "stub") {
-    const role = ticket.startsWith(STUB_TICKET_ROLE_PREFIX)
-      ? ticket.slice(STUB_TICKET_ROLE_PREFIX.length)
-      : "EMPLOYEE"
-    const result = stubIdentityByRole[role] ?? stubIdentityByRole.EMPLOYEE
-    return { ok: true, identity: identityFromResponseData(result.data) }
-  }
-
   if (mode === "real") {
     const result = await postForIdentity("/api/v1/auth/verify-ticket", { ticket })
     if (!result) return { ok: false }
     return { ok: true, identity: identityFromResponseData(result.data) }
   }
 
-  const email = redeemMockTicket(ticket)
-  if (!email) {
-    return { ok: false }
-  }
-
-  const account = findMockAccountByEmail(email)
-  if (!account) {
-    return { ok: false }
-  }
-
-  const { password: _password, jobTitle: _jobTitle, ...identity } = account
-  return { ok: true, identity }
+  const role = ticket.startsWith(STUB_TICKET_ROLE_PREFIX)
+    ? ticket.slice(STUB_TICKET_ROLE_PREFIX.length)
+    : "EMPLOYEE"
+  const result = stubIdentityByRole[role] ?? stubIdentityByRole.EMPLOYEE
+  return { ok: true, identity: identityFromResponseData(result.data) }
 }
