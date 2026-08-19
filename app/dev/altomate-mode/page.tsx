@@ -4,20 +4,28 @@ import { toggleStubMode } from "./actions"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { getMode } from "@/lib/altomatehr/client"
+import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 
 /**
  * Dev-only toggle for ALTOMATEHR_INTEGRATION_TEST_MODE — flips it
  * in-memory via a Server Action (see actions.ts), no .env edit or
  * restart needed. Resets to whatever .env says on the next restart.
  *
- * 404s outside local development — stub mode bypasses real credential
- * checks entirely (any email/password logs in as Stub Admin), so this
- * must never be reachable on a deployed environment. The guard here is
- * belt-and-suspenders: actions.ts independently refuses to run in
- * production even if this page were somehow reached.
+ * 404s unless dev tools are enabled (see lib/altomatehr/dev-tools.ts) —
+ * stub mode bypasses real credential checks entirely (any email/password
+ * logs in as Stub Admin), so this must stay closed by default on a
+ * deployed environment. The guard here is belt-and-suspenders: actions.ts
+ * independently refuses to run when dev tools are off, even if this page
+ * were somehow reached.
+ *
+ * force-dynamic: without it, Next.js statically prerenders this page at
+ * `next build` time and bakes in whatever the mode/gate checks resolved
+ * to THEN — a runtime env change + pm2 restart would never take effect.
  */
+export const dynamic = "force-dynamic"
+
 export default function AltomateModeDevPage() {
-  if (process.env.NODE_ENV === "production") notFound()
+  if (!isAltomateDevToolsEnabled()) notFound()
 
   const mode = getMode()
   const stubOn = process.env.ALTOMATEHR_INTEGRATION_TEST_MODE === "true"

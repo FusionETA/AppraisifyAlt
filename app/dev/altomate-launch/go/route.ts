@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 import { getMode } from "@/lib/altomatehr/client"
+import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 import { findMockAccountByEmail } from "@/lib/altomatehr/mock-data"
 import { mintMockTicket } from "@/lib/altomatehr/mock-tickets"
 
@@ -18,12 +19,12 @@ import { mintMockTicket } from "@/lib/altomatehr/mock-tickets"
  * matching stub fixture. This is what lets the launcher offer all four
  * roles even though stub mode has no real ticket store to look up.
  *
- * 404s outside local development — this mints a valid session for any
- * mock account with no auth check and must never be reachable on a
- * deployed environment.
+ * 404s unless dev tools are enabled (see lib/altomatehr/dev-tools.ts) —
+ * this mints a valid session for any mock account with no auth check and
+ * must stay closed by default on a deployed environment.
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  if (process.env.NODE_ENV === "production") {
+  if (!isAltomateDevToolsEnabled()) {
     return new NextResponse(null, { status: 404 })
   }
 

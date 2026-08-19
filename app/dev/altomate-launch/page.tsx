@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 
 import { getMode } from "@/lib/altomatehr/client"
+import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 import { MOCK_ORG_ID, listMockAccountsForOrg } from "@/lib/altomatehr/mock-data"
 
 const STUB_ROLES = [
@@ -21,11 +22,18 @@ const STUB_ROLES = [
  * mock-data.ts account list, since stub mode ignores which mock account
  * the ticket was minted for anyway.
  *
- * 404s outside local development — this is an unauthenticated "log in as
- * anyone" page and must never be reachable on a deployed environment.
+ * 404s unless dev tools are enabled (see lib/altomatehr/dev-tools.ts) —
+ * this is an unauthenticated "log in as anyone" page and must stay closed
+ * by default on a deployed environment.
+ *
+ * force-dynamic: without it, Next.js statically prerenders this page at
+ * `next build` time and bakes in whatever the mode/gate checks resolved
+ * to THEN — a runtime env change + pm2 restart would never take effect.
  */
+export const dynamic = "force-dynamic"
+
 export default function AltomateLaunchDevPage() {
-  if (process.env.NODE_ENV === "production") notFound()
+  if (!isAltomateDevToolsEnabled()) notFound()
 
   const stubMode = getMode() === "stub"
   const rows = stubMode

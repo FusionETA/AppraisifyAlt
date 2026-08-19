@@ -1,5 +1,12 @@
 import { LoginForm } from "@/app/login/login-form"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
+
+// Without this, Next.js statically prerenders the page at `next build`
+// time and bakes in whatever ALTOMATE_DEV_TOOLS resolved to THEN — a
+// runtime env change + pm2 restart would never take effect. Forces the
+// dev-tools check to run fresh on every request instead.
+export const dynamic = "force-dynamic"
 
 export default function LoginPage() {
   return (
@@ -17,7 +24,7 @@ export default function LoginPage() {
             <LoginForm />
           </CardContent>
         </Card>
-        {process.env.NODE_ENV !== "production" && (
+        {isAltomateDevToolsEnabled() && (
           <div className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
             <span className="font-semibold uppercase tracking-wide">Dev tools:</span>
             <a href="/dev/altomate-mode" className="underline hover:text-foreground">
