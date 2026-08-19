@@ -31,7 +31,7 @@ export default function LoginPage() {
               Integration mode
             </a>
             <a href="/dev/altomate-launch" className="underline hover:text-foreground">
-              Launch Appraisify
+              Test accounts
             </a>
           </div>
         )}
