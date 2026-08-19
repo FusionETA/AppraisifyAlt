@@ -80,6 +80,7 @@ export const OrganizationScalarFieldEnum = {
   id: 'id',
   altomateOrgId: 'altomateOrgId',
   name: 'name',
+  altomateApiTokenEncrypted: 'altomateApiTokenEncrypted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -199,21 +200,22 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const OrganizationOrderByRelevanceFieldEnum = {
-  id: 'id',
-  altomateOrgId: 'altomateOrgId',
-  name: 'name'
-} as const
-
-export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum]
-
-
 export const NullsOrder = {
   first: 'first',
   last: 'last'
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const OrganizationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  altomateOrgId: 'altomateOrgId',
+  name: 'name',
+  altomateApiTokenEncrypted: 'altomateApiTokenEncrypted'
+} as const
+
+export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum]
 
 
 export const UserOrderByRelevanceFieldEnum = {

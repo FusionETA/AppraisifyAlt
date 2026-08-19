@@ -28,6 +28,7 @@ export type OrganizationMinAggregateOutputType = {
   id: string | null
   altomateOrgId: string | null
   name: string | null
+  altomateApiTokenEncrypted: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -36,6 +37,7 @@ export type OrganizationMaxAggregateOutputType = {
   id: string | null
   altomateOrgId: string | null
   name: string | null
+  altomateApiTokenEncrypted: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +46,7 @@ export type OrganizationCountAggregateOutputType = {
   id: number
   altomateOrgId: number
   name: number
+  altomateApiTokenEncrypted: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -54,6 +57,7 @@ export type OrganizationMinAggregateInputType = {
   id?: true
   altomateOrgId?: true
   name?: true
+  altomateApiTokenEncrypted?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -62,6 +66,7 @@ export type OrganizationMaxAggregateInputType = {
   id?: true
   altomateOrgId?: true
   name?: true
+  altomateApiTokenEncrypted?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -70,6 +75,7 @@ export type OrganizationCountAggregateInputType = {
   id?: true
   altomateOrgId?: true
   name?: true
+  altomateApiTokenEncrypted?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -151,6 +157,7 @@ export type OrganizationGroupByOutputType = {
   id: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted: string | null
   createdAt: Date
   updatedAt: Date
   _count: OrganizationCountAggregateOutputType | null
@@ -180,6 +187,7 @@ export type OrganizationWhereInput = {
   id?: Prisma.StringFilter<"Organization"> | string
   altomateOrgId?: Prisma.StringFilter<"Organization"> | string
   name?: Prisma.StringFilter<"Organization"> | string
+  altomateApiTokenEncrypted?: Prisma.StringNullableFilter<"Organization"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   users?: Prisma.UserListRelationFilter
@@ -191,6 +199,7 @@ export type OrganizationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  altomateApiTokenEncrypted?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
@@ -206,6 +215,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OrganizationWhereInput[]
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   name?: Prisma.StringFilter<"Organization"> | string
+  altomateApiTokenEncrypted?: Prisma.StringNullableFilter<"Organization"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   users?: Prisma.UserListRelationFilter
@@ -217,6 +227,7 @@ export type OrganizationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  altomateApiTokenEncrypted?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
@@ -231,6 +242,7 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   altomateOrgId?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   name?: Prisma.StringWithAggregatesFilter<"Organization"> | string
+  altomateApiTokenEncrypted?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
 }
@@ -239,6 +251,7 @@ export type OrganizationCreateInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
@@ -250,6 +263,7 @@ export type OrganizationUncheckedCreateInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
@@ -261,6 +275,7 @@ export type OrganizationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
@@ -272,6 +287,7 @@ export type OrganizationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -283,6 +299,7 @@ export type OrganizationCreateManyInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -291,6 +308,7 @@ export type OrganizationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -299,6 +317,7 @@ export type OrganizationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -313,6 +332,7 @@ export type OrganizationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  altomateApiTokenEncrypted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -321,6 +341,7 @@ export type OrganizationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  altomateApiTokenEncrypted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -329,6 +350,7 @@ export type OrganizationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   altomateOrgId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  altomateApiTokenEncrypted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -340,6 +362,10 @@ export type OrganizationScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -392,6 +418,7 @@ export type OrganizationCreateWithoutUsersInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisals?: Prisma.AppraisalCreateNestedManyWithoutOrganizationInput
@@ -402,6 +429,7 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appraisals?: Prisma.AppraisalUncheckedCreateNestedManyWithoutOrganizationInput
@@ -428,6 +456,7 @@ export type OrganizationUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisals?: Prisma.AppraisalUpdateManyWithoutOrganizationNestedInput
@@ -438,6 +467,7 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisals?: Prisma.AppraisalUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -448,6 +478,7 @@ export type OrganizationCreateWithoutAppraisalsInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
@@ -458,6 +489,7 @@ export type OrganizationUncheckedCreateWithoutAppraisalsInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
@@ -484,6 +516,7 @@ export type OrganizationUpdateWithoutAppraisalsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
@@ -494,6 +527,7 @@ export type OrganizationUncheckedUpdateWithoutAppraisalsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -504,6 +538,7 @@ export type OrganizationCreateWithoutAppraisalTemplatesInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
@@ -514,6 +549,7 @@ export type OrganizationUncheckedCreateWithoutAppraisalTemplatesInput = {
   id?: string
   altomateOrgId: string
   name: string
+  altomateApiTokenEncrypted?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
@@ -540,6 +576,7 @@ export type OrganizationUpdateWithoutAppraisalTemplatesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
@@ -550,6 +587,7 @@ export type OrganizationUncheckedUpdateWithoutAppraisalTemplatesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateOrgId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  altomateApiTokenEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -609,6 +647,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   altomateOrgId?: boolean
   name?: boolean
+  altomateApiTokenEncrypted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   users?: boolean | Prisma.Organization$usersArgs<ExtArgs>
@@ -623,11 +662,12 @@ export type OrganizationSelectScalar = {
   id?: boolean
   altomateOrgId?: boolean
   name?: boolean
+  altomateApiTokenEncrypted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "altomateOrgId" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "altomateOrgId" | "name" | "altomateApiTokenEncrypted" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Organization$usersArgs<ExtArgs>
   appraisals?: boolean | Prisma.Organization$appraisalsArgs<ExtArgs>
@@ -651,6 +691,14 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
      */
     altomateOrgId: string
     name: string
+    /**
+     * Encrypted (AES-256-GCM, see lib/altomatehr/token-crypto.ts) per-org
+     * wp_live_* AltomateHR API token, used only for GET /api/v1/employees —
+     * that endpoint has no master-token support, so a genuine per-org token
+     * is required. Null until provisioned (scripts/provision-org-token.ts);
+     * roster sync degrades to an empty list, not an error, when absent.
+     */
+    altomateApiTokenEncrypted: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["organization"]>
@@ -1028,6 +1076,7 @@ export interface OrganizationFieldRefs {
   readonly id: Prisma.FieldRef<"Organization", 'String'>
   readonly altomateOrgId: Prisma.FieldRef<"Organization", 'String'>
   readonly name: Prisma.FieldRef<"Organization", 'String'>
+  readonly altomateApiTokenEncrypted: Prisma.FieldRef<"Organization", 'String'>
   readonly createdAt: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Organization", 'DateTime'>
 }

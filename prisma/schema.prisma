@@ -17,6 +17,14 @@ model Organization {
   /// local cache, not an authoritative account store.
   altomateOrgId String @unique
   name          String
+
+  /// Encrypted (AES-256-GCM, see lib/altomatehr/token-crypto.ts) per-org
+  /// wp_live_* AltomateHR API token, used only for GET /api/v1/employees —
+  /// that endpoint has no master-token support, so a genuine per-org token
+  /// is required. Null until provisioned (scripts/provision-org-token.ts);
+  /// roster sync degrades to an empty list, not an error, when absent.
+  altomateApiTokenEncrypted String?
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

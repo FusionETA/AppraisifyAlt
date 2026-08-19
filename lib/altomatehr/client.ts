@@ -12,8 +12,14 @@ export type VerifyResult = { ok: true; identity: AltomateVerifiedIdentity } | { 
 
 /**
  * Identity/roster data comes from one of two places:
- *  1. Real mode (ALTOMATEHR_API_BASE_URL + ALTOMATEHR_API_TOKEN both set)
- *     — the actual AltomateHR API.
+ *  1. Real mode (ALTOMATEHR_API_BASE_URL + ALTOMATEHR_MASTER_TOKEN both
+ *     set) — the actual AltomateHR API. The master token is NOT org-scoped
+ *     (it authenticates any admin/owner across every org — see
+ *     POST /api/v1/auth/verify's dual-mode auth), which is what makes
+ *     multi-tenant login/ticket redemption possible without knowing which
+ *     org a user belongs to in advance. GET /api/v1/employees has no
+ *     master-token support at all, so roster sync separately needs a
+ *     genuine per-org wp_live_* token — see listAltomateEmployees().
  *  2. Stub mode — everything else, including both the explicit
  *     ALTOMATEHR_INTEGRATION_TEST_MODE=true toggle (which wins outright,
  *     letting you force stub testing even with real credentials also
@@ -24,7 +30,7 @@ export type VerifyResult = { ok: true; identity: AltomateVerifiedIdentity } | { 
  */
 export function getMode(): "stub" | "real" {
   if (process.env.ALTOMATEHR_INTEGRATION_TEST_MODE === "true") return "stub"
-  if (process.env.ALTOMATEHR_API_BASE_URL && process.env.ALTOMATEHR_API_TOKEN) return "real"
+  if (process.env.ALTOMATEHR_API_BASE_URL && process.env.ALTOMATEHR_MASTER_TOKEN) return "real"
   return "stub"
 }
 
@@ -49,13 +55,18 @@ function identityFromResponseData(data: VerifyResponseData): AltomateVerifiedIde
   }
 }
 
-/** Shared POST-and-parse for /api/v1/auth/verify and /verify-ticket — same request/response shape. */
+/**
+ * Shared POST-and-parse for /api/v1/auth/verify and /verify-ticket — same
+ * request/response shape. Always uses the global master token — both
+ * endpoints resolve which org from the response itself, not from the
+ * caller's token scope.
+ */
 async function postForIdentity(
   path: string,
   body: unknown,
 ): Promise<{ data: VerifyResponseData } | null> {
   const baseUrl = process.env.ALTOMATEHR_API_BASE_URL
-  const token = process.env.ALTOMATEHR_API_TOKEN
+  const token = process.env.ALTOMATEHR_MASTER_TOKEN
   if (!baseUrl || !token) return null
 
   let response: Response
@@ -122,13 +133,28 @@ async function collectAllEmployeePages(
   return all
 }
 
-export async function listAltomateEmployees(organizationId: string): Promise<AltomateEmployee[]> {
+/**
+ * `orgApiToken` is a per-org wp_live_* token (decrypted by the caller from
+ * Organization.altomateApiTokenEncrypted) — GET /api/v1/employees has no
+ * master-token support, so this is the one call in this file that can't
+ * use the global ALTOMATEHR_MASTER_TOKEN. Ignored in stub mode. If real
+ * mode is active but no token was provisioned for this org yet, returns
+ * an empty roster rather than throwing or falling back to stub data.
+ */
+export async function listAltomateEmployees(
+  organizationId: string,
+  orgApiToken: string | null,
+): Promise<AltomateEmployee[]> {
   const mode = getMode()
 
   if (mode === "real") {
     const baseUrl = process.env.ALTOMATEHR_API_BASE_URL
-    const token = process.env.ALTOMATEHR_API_TOKEN
-    if (!baseUrl || !token) return []
+    if (!baseUrl) return []
+    if (!orgApiToken) {
+      console.warn(`[altomatehr] No API token provisioned for org ${organizationId} — roster sync skipped.`)
+      return []
+    }
+    const token = orgApiToken
 
     const rows = await collectAllEmployeePages(async (offset, limit) => {
       let response: Response

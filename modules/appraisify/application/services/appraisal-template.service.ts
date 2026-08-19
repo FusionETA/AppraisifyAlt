@@ -4,10 +4,44 @@ import { z } from "zod"
 
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
 import { appraisalTemplateRepository } from "@/modules/appraisify/infrastructure/appraisal-template.repository"
+import { DEFAULT_APPRAISAL_QUESTIONS } from "@/modules/appraisify/domain/models"
 import type {
   AppraisalTemplateSummary,
   AppraisalTemplateView,
 } from "@/modules/appraisify/domain/models"
+
+const DEFAULT_TEMPLATE_NAME = "Standard"
+
+/**
+ * Every org gets a starter template so Start Appraisal always has at least
+ * one real choice beyond the hardcoded fallback question set. Reuses the
+ * same DEFAULT_APPRAISAL_QUESTIONS that flow is already falling back to,
+ * so the content matches what an org would otherwise get anyway — this
+ * just makes it a real, editable template instead of a hidden constant.
+ *
+ * Called once per org on first login (buildSessionUserFromAltomateIdentity).
+ * scripts/seed-default-templates.ts backfills orgs that already existed
+ * before this was added — it can't call this function directly (it's
+ * behind `server-only`, which doesn't resolve in a bare tsx script), so it
+ * duplicates the same create() call against Prisma directly instead,
+ * sharing only the DEFAULT_APPRAISAL_QUESTIONS content. Safe to call this
+ * twice for the same org either way — it checks for an existing
+ * "Standard" template first.
+ */
+export async function seedDefaultTemplateForOrg(orgId: string): Promise<void> {
+  const templates = await appraisalTemplateRepository.listForOrg(orgId)
+  if (templates.some((t) => t.name === DEFAULT_TEMPLATE_NAME)) return
+
+  await appraisalTemplateRepository.create({
+    orgId,
+    name: DEFAULT_TEMPLATE_NAME,
+    questions: DEFAULT_APPRAISAL_QUESTIONS.map((q) => ({
+      section: q.section,
+      text: q.text,
+      description: q.description ?? null,
+    })),
+  })
+}
 
 /* ── Page-data ─────────────────────────────────────────────────────── */
 

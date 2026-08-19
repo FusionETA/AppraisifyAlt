@@ -12,14 +12,24 @@ function getPrisma() {
 }
 
 export const identityRepository = {
-  /** Local cache write, keyed by AltomateHR's own org id. */
+  /**
+   * Local cache write, keyed by AltomateHR's own org id. `isNew` tells the
+   * caller whether this org was just created (vs. an existing org's name
+   * being refreshed) — used to seed a default question template exactly
+   * once per org, not on every login.
+   */
   async upsertOrganizationFromAltomate(input: { altomateOrgId: string; name: string }) {
     const prisma = getPrisma()
-    return prisma.organization.upsert({
+    const existing = await prisma.organization.findUnique({
+      where: { altomateOrgId: input.altomateOrgId },
+      select: { id: true },
+    })
+    const organization = await prisma.organization.upsert({
       where: { altomateOrgId: input.altomateOrgId },
       create: { altomateOrgId: input.altomateOrgId, name: input.name },
       update: { name: input.name },
     })
+    return { ...organization, isNew: !existing }
   },
 
   /** Local cache write, keyed by AltomateHR's own user id. */
@@ -50,6 +60,16 @@ export const identityRepository = {
         title: input.title ?? null,
       },
     })
+  },
+
+  /** Raw encrypted value only — decryption is the caller's concern (see lib/altomatehr/token-crypto.ts). */
+  async getOrgApiTokenEncrypted(orgId: string): Promise<string | null> {
+    const prisma = getPrisma()
+    const org = await prisma.organization.findUnique({
+      where: { id: orgId },
+      select: { altomateApiTokenEncrypted: true },
+    })
+    return org?.altomateApiTokenEncrypted ?? null
   },
 
   async listOrgMembers(orgId: string): Promise<EmployeeDirectoryRow[]> {

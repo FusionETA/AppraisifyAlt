@@ -6,6 +6,7 @@ import { getPrismaClient } from "@/lib/prisma"
 import type { SessionUser } from "@/lib/auth/types"
 import { buildInitials } from "@/lib/utils"
 import { identityRepository } from "@/modules/identity/infrastructure/identity.repository"
+import { seedDefaultTemplateForOrg } from "@/modules/appraisify/application/services/appraisal-template.service"
 
 export type AuthenticateResult =
   | { success: true; user: SessionUser }
@@ -24,6 +25,9 @@ export async function buildSessionUserFromAltomateIdentity(
     altomateOrgId: identity.organizationId,
     name: identity.organizationName,
   })
+  if (organization.isNew) {
+    await seedDefaultTemplateForOrg(organization.id)
+  }
   const user = await identityRepository.upsertUserFromAltomate({
     altomateUserId: identity.id,
     organizationId: organization.id,

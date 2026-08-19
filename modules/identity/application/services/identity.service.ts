@@ -1,6 +1,7 @@
 import "server-only"
 
 import { listAltomateEmployees } from "@/lib/altomatehr/client"
+import { decryptToken } from "@/lib/altomatehr/token-crypto"
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
 import { appraisalRepository } from "@/modules/appraisify/infrastructure/appraisal.repository"
 import { identityRepository } from "@/modules/identity/infrastructure/identity.repository"
@@ -8,12 +9,16 @@ import { identityRepository } from "@/modules/identity/infrastructure/identity.r
 import type { EmployeeDirectoryRow, EmployeeRosterRow } from "@/modules/identity/domain/models"
 
 /**
- * Refresh the local user cache from AltomateHR (mocked) before any
- * employee-list page reads it, so the roster always reflects the source of
- * truth rather than a stale local snapshot.
+ * Refresh the local user cache from AltomateHR before any employee-list
+ * page reads it, so the roster always reflects the source of truth rather
+ * than a stale local snapshot. Real mode needs this org's own per-org API
+ * token (GET /api/v1/employees has no master-token support) — decrypted
+ * here, right before use, never held longer than this call needs it.
  */
 export async function syncEmployeesFromAltomate(organizationId: string, altomateOrgId: string): Promise<void> {
-  const employees = await listAltomateEmployees(altomateOrgId)
+  const encryptedToken = await identityRepository.getOrgApiTokenEncrypted(organizationId)
+  const orgApiToken = encryptedToken ? decryptToken(encryptedToken) : null
+  const employees = await listAltomateEmployees(altomateOrgId, orgApiToken)
   await Promise.all(
     employees.map((e) =>
       identityRepository.upsertUserFromAltomate({
