@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "usr_stub_supervisor_001",
+    "name": "Stub Supervisor",
+    "email": "stub.supervisor@fusioneta.mock",
+    "role": "SUPERVISOR",
+    "organizationId": "org_stub_001",
+    "organizationName": "Stub Organization",
+    "organizations": []
+  }
+}

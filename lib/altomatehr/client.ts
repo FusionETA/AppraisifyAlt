@@ -6,6 +6,8 @@ import stubEmployeesPage1 from "./stubs/employees-page-1.json"
 import stubEmployeesPage2 from "./stubs/employees-page-2.json"
 import stubVerify from "./stubs/verify.json"
 import stubVerifyTicket from "./stubs/verify-ticket.json"
+import stubVerifyTicketOwner from "./stubs/verify-ticket-owner.json"
+import stubVerifyTicketSupervisor from "./stubs/verify-ticket-supervisor.json"
 import type { AltomateEmployee, AltomateVerifiedIdentity } from "./types"
 
 export type VerifyResult = { ok: true; identity: AltomateVerifiedIdentity } | { ok: false }
@@ -185,11 +187,29 @@ export async function listAltomateEmployees(organizationId: string): Promise<Alt
     }))
 }
 
+/**
+ * Dev-only convention: /dev/altomate-launch mints tickets shaped
+ * "stub-role:<ROLE>" while stub mode is active, so the launcher can offer
+ * all four roles instead of always landing on the same fixed identity.
+ * Any other ticket value (including real mock tickets used outside stub
+ * mode) falls back to the original Stub Employee fixture.
+ */
+const STUB_TICKET_ROLE_PREFIX = "stub-role:"
+const stubIdentityByRole: Record<string, { data: VerifyResponseData }> = {
+  EMPLOYEE: stubVerifyTicket as { data: VerifyResponseData },
+  SUPERVISOR: stubVerifyTicketSupervisor as { data: VerifyResponseData },
+  ADMIN: stubVerify as { data: VerifyResponseData },
+  OWNER: stubVerifyTicketOwner as { data: VerifyResponseData },
+}
+
 export async function verifyAltomateTicket(ticket: string): Promise<VerifyResult> {
   const mode = getMode()
 
   if (mode === "stub") {
-    const result = stubVerifyTicket as { data: VerifyResponseData }
+    const role = ticket.startsWith(STUB_TICKET_ROLE_PREFIX)
+      ? ticket.slice(STUB_TICKET_ROLE_PREFIX.length)
+      : "EMPLOYEE"
+    const result = stubIdentityByRole[role] ?? stubIdentityByRole.EMPLOYEE
     return { ok: true, identity: identityFromResponseData(result.data) }
   }
 

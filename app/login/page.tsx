@@ -17,6 +17,17 @@ export default function LoginPage() {
             <LoginForm />
           </CardContent>
         </Card>
+        {process.env.NODE_ENV !== "production" && (
+          <div className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
+            <span className="font-semibold uppercase tracking-wide">Dev tools:</span>
+            <a href="/dev/altomate-mode" className="underline hover:text-foreground">
+              Integration mode
+            </a>
+            <a href="/dev/altomate-launch" className="underline hover:text-foreground">
+              Launch Appraisify
+            </a>
+          </div>
+        )}
       </div>
     </main>
   )
