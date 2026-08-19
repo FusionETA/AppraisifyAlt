@@ -1,5 +1,7 @@
 import { LoginForm } from "@/app/login/login-form"
+import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getMode } from "@/lib/altomatehr/client"
 import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 
 // Without this, Next.js statically prerenders the page at `next build`
@@ -9,6 +11,9 @@ import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 export const dynamic = "force-dynamic"
 
 export default function LoginPage() {
+  const devToolsEnabled = isAltomateDevToolsEnabled()
+  const mode = devToolsEnabled ? getMode() : null
+
   return (
     <main className="flex min-h-screen items-center px-4 py-10">
       <div className="mx-auto w-full max-w-md">
@@ -24,11 +29,17 @@ export default function LoginPage() {
             <LoginForm />
           </CardContent>
         </Card>
-        {isAltomateDevToolsEnabled() && (
+        {devToolsEnabled && (
           <div className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
             <span className="font-semibold uppercase tracking-wide">Dev tools:</span>
-            <a href="/dev/altomate-mode" className="underline hover:text-foreground">
+            <a
+              href="/dev/altomate-mode"
+              className="flex items-center gap-1.5 underline hover:text-foreground"
+            >
               Integration mode
+              <Badge variant={mode === "stub" ? "success" : "outline"} className="!px-2 !py-0.5 !text-[10px]">
+                {mode}
+              </Badge>
             </a>
             <a href="/dev/altomate-launch" className="underline hover:text-foreground">
               Test accounts

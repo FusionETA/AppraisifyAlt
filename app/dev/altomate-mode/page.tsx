@@ -33,6 +33,9 @@ export default function AltomateModeDevPage() {
 
   return (
     <div className="mx-auto max-w-md space-y-6 px-4 py-10">
+      <a href="/login" className="text-xs text-muted-foreground underline hover:text-foreground">
+        ← Back to login
+      </a>
       <div>
         <h1 className="text-xl font-bold text-foreground">AltomateHR integration mode</h1>
         <p className="mt-1 text-sm text-muted-foreground">
