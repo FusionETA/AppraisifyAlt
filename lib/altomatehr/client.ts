@@ -23,7 +23,7 @@ export type VerifyResult = { ok: true; identity: AltomateVerifiedIdentity } | { 
  *  3. Mock mode (neither set — the default for local dev and any
  *     unconfigured deploy) — lib/altomatehr/mock-data.ts.
  */
-function getMode(): "stub" | "real" | "mock" {
+export function getMode(): "stub" | "real" | "mock" {
   if (process.env.ALTOMATEHR_INTEGRATION_TEST_MODE === "true") return "stub"
   if (process.env.ALTOMATEHR_API_BASE_URL && process.env.ALTOMATEHR_API_TOKEN) return "real"
   return "mock"
