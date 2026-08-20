@@ -1,5 +1,6 @@
 import "server-only"
 
+import { appRoles, isEmployeePortalRole } from "@/lib/auth/types"
 import { toNumber } from "@/lib/decimal"
 import { getPrismaClient } from "@/lib/prisma"
 import { buildInitials } from "@/lib/utils"
@@ -299,24 +300,33 @@ export const appraisalRepository = {
    * Employees of the org: user id + name + job title (position). AltomateHR
    * sources this from a separate `EmployeeProfile.jobTitle` row;
    * AppraisifyAlt has no such module, so it reads `User.title` directly.
+   *
+   * ADMIN/OWNER excluded — they're never appraisal participants, matching
+   * the real AltomateHR roster endpoint's own EMPLOYEE/SUPERVISOR-only
+   * behavior (see lib/altomatehr/client.ts's listAltomateEmployees).
    */
   async listOrgEmployees(
     orgId: string,
   ): Promise<Array<{ userId: string; name: string; jobTitle: string }>> {
     const prisma = getAppraisalsPrismaClient()
     const rows = await prisma.user.findMany({
-      where: { organizationId: orgId },
+      where: { organizationId: orgId, role: { in: appRoles.filter(isEmployeePortalRole) } },
       select: { id: true, name: true, title: true },
       orderBy: { name: "asc" },
     })
     return rows.map((r) => ({ userId: r.id, name: r.name, jobTitle: r.title ?? "" }))
   },
 
-  /** All users in the org — reviewer / partner candidates for new cycles. */
+  /**
+   * Reviewer / partner candidates for new cycles. Same EMPLOYEE/SUPERVISOR-
+   * only rule as listOrgEmployees above — admins/owners can launch and
+   * oversee appraisals, but never sit inside one as reviewee, reviewer, or
+   * partner.
+   */
   async listOrgPeople(orgId: string): Promise<AppraisalPersonRef[]> {
     const prisma = getAppraisalsPrismaClient()
     const rows = await prisma.user.findMany({
-      where: { organizationId: orgId },
+      where: { organizationId: orgId, role: { in: appRoles.filter(isEmployeePortalRole) } },
       select: { id: true, name: true },
       orderBy: { name: "asc" },
     })

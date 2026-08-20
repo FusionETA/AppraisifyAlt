@@ -4,10 +4,11 @@ import { getMode } from "@/lib/altomatehr/client"
 import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 
 const STUB_ROLES = [
-  { role: "EMPLOYEE", name: "Stub Employee", jobTitle: "Software Engineer" },
-  { role: "SUPERVISOR", name: "Stub Supervisor", jobTitle: "Engineering Lead" },
-  { role: "ADMIN", name: "Stub Admin", jobTitle: "—" },
-  { role: "OWNER", name: "Stub Owner", jobTitle: "—" },
+  { stubKey: "EMPLOYEE", role: "EMPLOYEE", name: "Stub Employee", jobTitle: "Software Engineer" },
+  { stubKey: "EMPLOYEE_TWO", role: "EMPLOYEE", name: "Stub Employee Two", jobTitle: "Product Designer" },
+  { stubKey: "SUPERVISOR", role: "SUPERVISOR", name: "Stub Supervisor", jobTitle: "Engineering Lead" },
+  { stubKey: "ADMIN", role: "ADMIN", name: "Stub Admin", jobTitle: "—" },
+  { stubKey: "OWNER", role: "OWNER", name: "Stub Owner", jobTitle: "—" },
 ] as const
 
 /**
@@ -63,9 +64,9 @@ export default function AltomateLaunchDevPage() {
       ) : (
         <ul className="divide-y divide-border/60 rounded-xl border border-border/60">
           {STUB_ROLES.map((account) => (
-            <li key={account.role}>
+            <li key={account.stubKey}>
               <a
-                href={`/dev/altomate-launch/go?stubRole=${account.role}`}
+                href={`/dev/altomate-launch/go?stubRole=${account.stubKey}`}
                 className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-surface-low/50"
               >
                 <span>

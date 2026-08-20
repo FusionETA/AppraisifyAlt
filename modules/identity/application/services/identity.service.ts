@@ -3,6 +3,7 @@ import "server-only"
 import { listAltomateEmployees } from "@/lib/altomatehr/client"
 import { decryptToken } from "@/lib/altomatehr/token-crypto"
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
+import { isEmployeePortalRole } from "@/lib/auth/types"
 import { appraisalRepository } from "@/modules/appraisify/infrastructure/appraisal.repository"
 import { identityRepository } from "@/modules/identity/infrastructure/identity.repository"
 
@@ -44,7 +45,13 @@ export async function getEmployeeDirectoryData(): Promise<{ members: EmployeeDir
   return { members: await identityRepository.listOrgMembers(orgId) }
 }
 
-/** Dashboard's employee picker: account info + each person's current appraisal status. */
+/**
+ * Dashboard's employee picker: account info + each person's current
+ * appraisal status. ADMIN/OWNER filtered out — this list feeds Start
+ * Appraisal, and admins/owners are never appraisal participants (see
+ * appraisalRepository.listOrgEmployees/listOrgPeople for the same rule
+ * applied to the reviewer/partner pickers).
+ */
 export async function getEmployeeRosterData(): Promise<{ members: EmployeeRosterRow[] } | null> {
   const session = await getCurrentSession()
   if (!session) return null
@@ -53,10 +60,11 @@ export async function getEmployeeRosterData(): Promise<{ members: EmployeeRoster
 
   await syncEmployeesFromAltomate(orgId, session.altomateOrgId)
 
-  const [members, appraisals] = await Promise.all([
+  const [allMembers, appraisals] = await Promise.all([
     identityRepository.listOrgMembers(orgId),
     appraisalRepository.listForOrg(orgId),
   ])
+  const members = allMembers.filter((m) => isEmployeePortalRole(m.role))
 
   // First non-SUBMITTED appraisal per reviewee — same "active cycle" rule
   // the old admin dashboard used.

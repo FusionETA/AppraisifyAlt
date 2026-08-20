@@ -4,6 +4,7 @@ import stubEmployeesPage1 from "./stubs/employees-page-1.json"
 import stubEmployeesPage2 from "./stubs/employees-page-2.json"
 import stubVerify from "./stubs/verify.json"
 import stubVerifyTicket from "./stubs/verify-ticket.json"
+import stubVerifyTicketEmployeeTwo from "./stubs/verify-ticket-employee-two.json"
 import stubVerifyTicketOwner from "./stubs/verify-ticket-owner.json"
 import stubVerifyTicketSupervisor from "./stubs/verify-ticket-supervisor.json"
 import type { AltomateEmployee, AltomateVerifiedIdentity } from "./types"
@@ -187,13 +188,19 @@ export async function listAltomateEmployees(
 
 /**
  * Dev-only convention: /dev/altomate-launch mints tickets shaped
- * "stub-role:<ROLE>" while stub mode is active, so the launcher can offer
- * all four roles instead of always landing on the same fixed identity.
+ * "stub-role:<KEY>" while stub mode is active, so the launcher can offer
+ * multiple identities instead of always landing on the same fixed one.
+ * Keys aren't always a bare AppRole — EMPLOYEE_TWO is a second EMPLOYEE
+ * identity, needed because the roster (employees-page-*.json) has two
+ * EMPLOYEE-role people but only one could previously be logged into,
+ * which meant a 3-participant appraisal cycle (reviewee/reviewer/partner
+ * all distinct) could never be fully exercised end-to-end in stub mode.
  * Any other ticket value falls back to the Stub Employee fixture.
  */
 const STUB_TICKET_ROLE_PREFIX = "stub-role:"
 const stubIdentityByRole: Record<string, { data: VerifyResponseData }> = {
   EMPLOYEE: stubVerifyTicket as { data: VerifyResponseData },
+  EMPLOYEE_TWO: stubVerifyTicketEmployeeTwo as { data: VerifyResponseData },
   SUPERVISOR: stubVerifyTicketSupervisor as { data: VerifyResponseData },
   ADMIN: stubVerify as { data: VerifyResponseData },
   OWNER: stubVerifyTicketOwner as { data: VerifyResponseData },

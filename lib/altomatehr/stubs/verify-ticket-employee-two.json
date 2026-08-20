@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "usr_stub_employee_002",
+    "name": "Stub Employee Two",
+    "email": "stub.employee2@fusioneta.mock",
+    "role": "EMPLOYEE",
+    "organizationId": "org_stub_001",
+    "organizationName": "Stub Organization",
+    "organizations": []
+  }
+}
