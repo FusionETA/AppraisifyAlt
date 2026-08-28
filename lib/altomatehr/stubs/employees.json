@@ -1,0 +1,29 @@
+[
+  {
+    "id": "usr_stub_employee_001",
+    "name": "Stub Employee",
+    "email": "stub.employee@fusioneta.mock",
+    "role": "Employee",
+    "jobTitle": "Software Engineer",
+    "employeeNumber": "EMP-001",
+    "supervisorId": "usr_stub_supervisor_001"
+  },
+  {
+    "id": "usr_stub_supervisor_001",
+    "name": "Stub Supervisor",
+    "email": "stub.supervisor@fusioneta.mock",
+    "role": "Supervisor",
+    "jobTitle": "Engineering Lead",
+    "employeeNumber": "EMP-002",
+    "supervisorId": null
+  },
+  {
+    "id": "usr_stub_employee_002",
+    "name": "Stub Employee Two",
+    "email": "stub.employee2@fusioneta.mock",
+    "role": "Employee",
+    "jobTitle": "Product Designer",
+    "employeeNumber": "EMP-003",
+    "supervisorId": "usr_stub_supervisor_001"
+  }
+]

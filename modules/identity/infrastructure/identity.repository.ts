@@ -2,9 +2,6 @@ import "server-only"
 
 import { getPrismaClient } from "@/lib/prisma"
 
-import type { AppRole } from "@/lib/auth/types"
-import type { EmployeeDirectoryRow } from "@/modules/identity/domain/models"
-
 function getPrisma() {
   const prisma = getPrismaClient()
   if (!prisma) throw new Error("Database is not configured")
@@ -32,60 +29,40 @@ export const identityRepository = {
     return { ...organization, isNew: !existing }
   },
 
-  /** Local cache write, keyed by AltomateHR's own user id. */
-  async upsertUserFromAltomate(input: {
-    altomateUserId: string
-    organizationId: string
-    email: string
-    name: string
-    role: AppRole
-    title?: string | null
-  }) {
+  /**
+   * Local identity-anchor write, keyed by AltomateHR's own user id — NOT a
+   * roster cache. Only ever writes id/organizationId; there's no name/
+   * email/role/title column to write (see prisma/schema.prisma's User
+   * model comment). Called at login (lib/auth/authenticate.ts) and
+   * lazily from appraisal-workflow.service.ts when an admin selects
+   * someone from the live roster who's never logged in themselves yet —
+   * either way, this just guarantees an FK target exists.
+   */
+  async upsertUserFromAltomate(input: { altomateUserId: string; organizationId: string }) {
     const prisma = getPrisma()
     return prisma.user.upsert({
       where: { altomateUserId: input.altomateUserId },
-      create: {
-        altomateUserId: input.altomateUserId,
-        organizationId: input.organizationId,
-        email: input.email,
-        name: input.name,
-        role: input.role,
-        title: input.title ?? null,
-      },
-      update: {
-        organizationId: input.organizationId,
-        email: input.email,
-        name: input.name,
-        role: input.role,
-        title: input.title ?? null,
-      },
+      create: { altomateUserId: input.altomateUserId, organizationId: input.organizationId },
+      update: { organizationId: input.organizationId },
     })
   },
 
-  /** Raw encrypted value only — decryption is the caller's concern (see lib/altomatehr/token-crypto.ts). */
-  async getOrgApiTokenEncrypted(orgId: string): Promise<string | null> {
-    const prisma = getPrisma()
-    const org = await prisma.organization.findUnique({
-      where: { id: orgId },
-      select: { altomateApiTokenEncrypted: true },
-    })
-    return org?.altomateApiTokenEncrypted ?? null
-  },
-
-  async listOrgMembers(orgId: string): Promise<EmployeeDirectoryRow[]> {
+  /**
+   * Maps a batch of AltomateHR user ids to their local anchor-row id
+   * (Appraisal.revieweeId/reviewerId/partnerId and Notification.userId
+   * are always the LOCAL id, never AltomateHR's own — see the User model
+   * comment). A roster member with no entry in the returned map has no
+   * local row at all yet, which only happens if they've never logged in
+   * AND never been referenced by an appraisal — i.e. they trivially have
+   * no active cycle, since having one would already require a local row.
+   */
+  async findLocalIdsByAltomateIds(altomateUserIds: string[]): Promise<Map<string, string>> {
+    if (altomateUserIds.length === 0) return new Map()
     const prisma = getPrisma()
     const rows = await prisma.user.findMany({
-      where: { organizationId: orgId },
-      select: { id: true, name: true, email: true, role: true, title: true, createdAt: true },
-      orderBy: { name: "asc" },
+      where: { altomateUserId: { in: altomateUserIds } },
+      select: { id: true, altomateUserId: true },
     })
-    return rows.map((r) => ({
-      id: r.id,
-      name: r.name,
-      email: r.email,
-      role: r.role,
-      title: r.title,
-      createdAt: r.createdAt.toISOString(),
-    }))
+    return new Map(rows.map((r) => [r.altomateUserId, r.id]))
   },
 }

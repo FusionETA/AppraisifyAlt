@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { type NextRequest, NextResponse } from "next/server"
 
+import { refreshAltomateToken } from "@/lib/altomatehr/client"
 import { getRequestOrigin } from "@/lib/request-origin"
 
 const SESSION_COOKIE = "appraisifyalt_session"
@@ -23,8 +24,14 @@ const sessionSchema = z.object({
   organizationId: z.string().min(1),
   organizationName: z.string().min(1),
   altomateOrgId: z.string().min(1),
+  altomateAccessToken: z.string().min(1),
+  altomateRefreshToken: z.string().min(1),
+  altomateAccessTokenExpiresAt: z.number().int().positive(),
+  altomateAccessTokenRefreshAt: z.number().int().positive(),
   expiresAt: z.number().int().positive(),
 })
+
+type Session = z.infer<typeof sessionSchema>
 
 function getAuthSecret() {
   if (process.env.AUTH_SECRET) {
@@ -124,6 +131,50 @@ function redirectToLogin(request: NextRequest) {
   return NextResponse.redirect(new URL("/login", getRequestOrigin(request)))
 }
 
+/**
+ * The AltomateHR access token's refresh failed — either a transient error,
+ * or (more likely) the refresh token itself hit its own max lifetime on
+ * AltomateHR's side (not tracked client-side; we just attempt refresh and
+ * handle failure). Nothing in Appraisify can be trusted to still reflect
+ * AltomateHR without a working token, so clear the session outright and
+ * send the user through a fresh launch — see app/auth/altomate-relaunch.
+ */
+function redirectToRelaunch(request: NextRequest) {
+  const response = NextResponse.redirect(new URL("/auth/altomate-relaunch", getRequestOrigin(request)))
+  response.cookies.set(SESSION_COOKIE, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    expires: new Date(0),
+  })
+  return response
+}
+
+/**
+ * Same logic as lib/utils' buildInitials, duplicated here on purpose —
+ * this file stays self-contained for the edge runtime (it already
+ * duplicates the session schema for the same reason) rather than pulling
+ * lib/utils' clsx/tailwind-merge imports into the middleware bundle.
+ */
+function buildInitialsForSession(name: string): string {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase()
+}
+
+async function encodeAndSignSession(session: Session): Promise<string> {
+  const payload = btoa(JSON.stringify(session))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "")
+  const signature = await signValue(payload)
+  return `${payload}.${signature}`
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -151,29 +202,75 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(correctBase, getRequestOrigin(request)))
   }
 
-  const response = NextResponse.next()
+  let nextSession: Session = session
+
+  // The AltomateHR access token (~15min real / ~20s stub) is a completely
+  // separate, much shorter lifecycle than the outer Appraisify session
+  // below — refreshing it here never affects how long the person stays
+  // logged into Appraisify. Silent on success; a relaunch is only ever
+  // triggered by the refresh itself failing, never by routine expiry.
+  if (Date.now() >= session.altomateAccessTokenRefreshAt) {
+    const refreshed = await refreshAltomateToken(session.altomateRefreshToken)
+    if (!refreshed.ok) {
+      return redirectToRelaunch(request)
+    }
+    const now = Date.now()
+    nextSession = {
+      ...nextSession,
+      altomateAccessToken: refreshed.tokens.accessToken,
+      altomateRefreshToken: refreshed.tokens.refreshToken,
+      altomateAccessTokenExpiresAt: now + refreshed.tokens.expiresIn * 1000,
+      altomateAccessTokenRefreshAt: now + refreshed.tokens.expiresIn * 1000 * 0.8,
+    }
+    // The refresh response carries the current user/organization (per the
+    // partner spec) — re-sync the session's identity fields on every
+    // rotation, so a rename or role change on AltomateHR's side
+    // propagates within one token lifetime instead of waiting for a full
+    // relaunch. Best-effort: absent blocks leave the fields untouched.
+    if (refreshed.user) {
+      nextSession = {
+        ...nextSession,
+        name: refreshed.user.name,
+        email: refreshed.user.email,
+        role: refreshed.user.role,
+        initials: buildInitialsForSession(refreshed.user.name),
+      }
+    }
+    if (refreshed.organization) {
+      nextSession = { ...nextSession, organizationName: refreshed.organization.name }
+    }
+  }
 
   // Rolling session — extend the cookie once less than half its duration
   // remains. Done here (not in the layout) because Next.js forbids
   // `cookies().set(...)` during page/layout render; middleware can attach
   // Set-Cookie to the response freely.
   const renewThreshold = SESSION_DURATION_MS / 2
-  if (session.expiresAt - Date.now() < renewThreshold) {
-    const newExpiresAt = Date.now() + SESSION_DURATION_MS
-    const renewed = { ...session, expiresAt: newExpiresAt }
-    const payload = btoa(JSON.stringify(renewed))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/g, "")
-    const newSignature = await signValue(payload)
-    response.cookies.set(SESSION_COOKIE, `${payload}.${newSignature}`, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      expires: new Date(newExpiresAt),
-    })
+  if (nextSession.expiresAt - Date.now() < renewThreshold) {
+    nextSession = { ...nextSession, expiresAt: Date.now() + SESSION_DURATION_MS }
   }
+
+  if (nextSession === session) {
+    return NextResponse.next()
+  }
+
+  const newCookieValue = await encodeAndSignSession(nextSession)
+
+  // Two writes, not one: `request.cookies.set(...)` makes the refreshed
+  // token visible to Server Components rendering *later in this same
+  // request* (a stale read here would otherwise fetch the roster with a
+  // token that's about to be considered expired); `response.cookies.set`
+  // is what actually reaches the browser for its *next* request. Neither
+  // alone is sufficient.
+  request.cookies.set(SESSION_COOKIE, newCookieValue)
+  const response = NextResponse.next({ request })
+  response.cookies.set(SESSION_COOKIE, newCookieValue, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    expires: new Date(nextSession.expiresAt),
+  })
 
   return response
 }

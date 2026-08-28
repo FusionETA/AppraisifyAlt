@@ -18,13 +18,6 @@ model Organization {
   altomateOrgId String @unique
   name          String
 
-  /// Encrypted (AES-256-GCM, see lib/altomatehr/token-crypto.ts) per-org
-  /// wp_live_* AltomateHR API token, used only for GET /api/v1/employees —
-  /// that endpoint has no master-token support, so a genuine per-org token
-  /// is required. Null until provisioned (scripts/provision-org-token.ts);
-  /// roster sync degrades to an empty list, not an error, when absent.
-  altomateApiTokenEncrypted String?
-
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -33,35 +26,24 @@ model Organization {
   appraisalTemplates  AppraisalTemplate[]
 }
 
-/* ─── User ──────────────────────────────────────────────────────────── */
-
-enum UserRole {
-  EMPLOYEE
-  SUPERVISOR
-  ADMIN
-  OWNER
-}
+/* ─── User ──────────────────────────────────────────────────────────────
+   A minimal identity anchor, NOT an employee cache — name/email/role/title
+   are never stored here. This row exists solely so Appraisal/Notification
+   FKs have a stable local id to point at; every actual "who is this
+   person" question is answered by a live AltomateHR fetch (see
+   lib/altomatehr/client.ts, modules/identity/application/services/
+   roster.service.ts). Created lazily — either at login, or when an admin
+   picks someone from the live roster into an appraisal who's never
+   logged in themselves yet. */
 
 model User {
   id             String   @id @default(cuid())
   organizationId String
 
-  /// The join key back to AltomateHR's own user id. Every row exists
-  /// because it was synced from AltomateHR (mocked) — there are no local
-  /// credentials or locally-managed accounts.
-  altomateUserId String   @unique
-  email          String   @unique
-  name           String
-  role           UserRole @default(EMPLOYEE)
-
-  /// Free-text job title, shown as "position" on the admin employees table
-  /// and snapshotted onto `Appraisal.role` when a cycle starts. AltomateHR
-  /// keeps this on a separate `EmployeeProfile` row; AppraisifyAlt has no
-  /// equivalent module, so it lives directly on `User`.
-  title String?
+  /// The join key back to AltomateHR's own user id.
+  altomateUserId String @unique
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
@@ -133,6 +115,15 @@ model Appraisal {
   reviewerId      String
   partnerId       String
   createdByUserId String
+
+  /// Snapshot of each participant's name at the moment the cycle is
+  /// launched — the live AltomateHR roster is never cached locally, so
+  /// without this a historical appraisal could never resolve names for
+  /// someone who's since left the org. No column for createdByUserId:
+  /// confirmed never read for display anywhere in the app.
+  revieweeName String
+  reviewerName String
+  partnerName  String
 
   /// Per-phase section free-text (Goals Review / Overall Remarks /
   /// Development Plans), one set per phase.

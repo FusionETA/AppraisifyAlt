@@ -28,36 +28,21 @@ export type UserMinAggregateOutputType = {
   id: string | null
   organizationId: string | null
   altomateUserId: string | null
-  email: string | null
-  name: string | null
-  role: $Enums.UserRole | null
-  title: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   organizationId: string | null
   altomateUserId: string | null
-  email: string | null
-  name: string | null
-  role: $Enums.UserRole | null
-  title: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   organizationId: number
   altomateUserId: number
-  email: number
-  name: number
-  role: number
-  title: number
   createdAt: number
-  updatedAt: number
   _all: number
 }
 
@@ -66,36 +51,21 @@ export type UserMinAggregateInputType = {
   id?: true
   organizationId?: true
   altomateUserId?: true
-  email?: true
-  name?: true
-  role?: true
-  title?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   organizationId?: true
   altomateUserId?: true
-  email?: true
-  name?: true
-  role?: true
-  title?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   organizationId?: true
   altomateUserId?: true
-  email?: true
-  name?: true
-  role?: true
-  title?: true
   createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -175,12 +145,7 @@ export type UserGroupByOutputType = {
   id: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role: $Enums.UserRole
-  title: string | null
   createdAt: Date
-  updatedAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -208,12 +173,7 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   organizationId?: Prisma.StringFilter<"User"> | string
   altomateUserId?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  title?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   appraisalsAsReviewee?: Prisma.AppraisalListRelationFilter
   appraisalsAsReviewer?: Prisma.AppraisalListRelationFilter
@@ -226,12 +186,7 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  role?: Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
   appraisalsAsReviewee?: Prisma.AppraisalOrderByRelationAggregateInput
   appraisalsAsReviewer?: Prisma.AppraisalOrderByRelationAggregateInput
@@ -244,34 +199,24 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   altomateUserId?: string
-  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   organizationId?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  title?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   appraisalsAsReviewee?: Prisma.AppraisalListRelationFilter
   appraisalsAsReviewer?: Prisma.AppraisalListRelationFilter
   appraisalsAsPartner?: Prisma.AppraisalListRelationFilter
   appraisalsCreated?: Prisma.AppraisalListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
-}, "id" | "altomateUserId" | "email">
+}, "id" | "altomateUserId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  role?: Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -284,23 +229,13 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   organizationId?: Prisma.StringWithAggregatesFilter<"User"> | string
   altomateUserId?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
-  title?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalCreateNestedManyWithoutReviewerInput
@@ -313,12 +248,7 @@ export type UserUncheckedCreateInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedCreateNestedManyWithoutPartnerInput
@@ -329,12 +259,7 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUpdateManyWithoutReviewerNestedInput
@@ -347,12 +272,7 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedUpdateManyWithoutPartnerNestedInput
@@ -364,35 +284,20 @@ export type UserCreateManyInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserListRelationFilter = {
@@ -415,36 +320,21 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  role?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  role?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   altomateUserId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  role?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -492,10 +382,6 @@ export type UserUncheckedUpdateManyWithoutOrganizationNestedInput = {
   update?: Prisma.UserUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.UserUpdateWithWhereUniqueWithoutOrganizationInput[]
   updateMany?: Prisma.UserUpdateManyWithWhereWithoutOrganizationInput | Prisma.UserUpdateManyWithWhereWithoutOrganizationInput[]
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-}
-
-export type EnumUserRoleFieldUpdateOperationsInput = {
-  set?: $Enums.UserRole
 }
 
 export type UserCreateNestedOneWithoutNotificationsInput = {
@@ -571,12 +457,7 @@ export type UserUpdateOneRequiredWithoutAppraisalsCreatedNestedInput = {
 export type UserCreateWithoutOrganizationInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalCreateNestedManyWithoutPartnerInput
@@ -587,12 +468,7 @@ export type UserCreateWithoutOrganizationInput = {
 export type UserUncheckedCreateWithoutOrganizationInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedCreateNestedManyWithoutPartnerInput
@@ -633,23 +509,13 @@ export type UserScalarWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   organizationId?: Prisma.StringFilter<"User"> | string
   altomateUserId?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  title?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
 export type UserCreateWithoutNotificationsInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalCreateNestedManyWithoutReviewerInput
@@ -661,12 +527,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedCreateNestedManyWithoutPartnerInput
@@ -692,12 +553,7 @@ export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
 export type UserUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUpdateManyWithoutReviewerNestedInput
@@ -709,12 +565,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedUpdateManyWithoutPartnerNestedInput
@@ -724,12 +575,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
 export type UserCreateWithoutAppraisalsAsRevieweeInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
   appraisalsAsReviewer?: Prisma.AppraisalCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalCreateNestedManyWithoutPartnerInput
@@ -741,12 +587,7 @@ export type UserUncheckedCreateWithoutAppraisalsAsRevieweeInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedCreateNestedManyWithoutPartnerInput
   appraisalsCreated?: Prisma.AppraisalUncheckedCreateNestedManyWithoutCreatedByInput
@@ -761,12 +602,7 @@ export type UserCreateOrConnectWithoutAppraisalsAsRevieweeInput = {
 export type UserCreateWithoutAppraisalsAsReviewerInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
   appraisalsAsPartner?: Prisma.AppraisalCreateNestedManyWithoutPartnerInput
@@ -778,12 +614,7 @@ export type UserUncheckedCreateWithoutAppraisalsAsReviewerInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedCreateNestedManyWithoutPartnerInput
   appraisalsCreated?: Prisma.AppraisalUncheckedCreateNestedManyWithoutCreatedByInput
@@ -798,12 +629,7 @@ export type UserCreateOrConnectWithoutAppraisalsAsReviewerInput = {
 export type UserCreateWithoutAppraisalsAsPartnerInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalCreateNestedManyWithoutReviewerInput
@@ -815,12 +641,7 @@ export type UserUncheckedCreateWithoutAppraisalsAsPartnerInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
   appraisalsCreated?: Prisma.AppraisalUncheckedCreateNestedManyWithoutCreatedByInput
@@ -835,12 +656,7 @@ export type UserCreateOrConnectWithoutAppraisalsAsPartnerInput = {
 export type UserCreateWithoutAppraisalsCreatedInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
   appraisalsAsReviewee?: Prisma.AppraisalCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalCreateNestedManyWithoutReviewerInput
@@ -852,12 +668,7 @@ export type UserUncheckedCreateWithoutAppraisalsCreatedInput = {
   id?: string
   organizationId: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedCreateNestedManyWithoutRevieweeInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedCreateNestedManyWithoutReviewerInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedCreateNestedManyWithoutPartnerInput
@@ -883,12 +694,7 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsAsRevieweeInput = {
 export type UserUpdateWithoutAppraisalsAsRevieweeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUpdateManyWithoutPartnerNestedInput
@@ -900,12 +706,7 @@ export type UserUncheckedUpdateWithoutAppraisalsAsRevieweeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedUpdateManyWithoutPartnerNestedInput
   appraisalsCreated?: Prisma.AppraisalUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -926,12 +727,7 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsAsReviewerInput = {
 export type UserUpdateWithoutAppraisalsAsReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUpdateManyWithoutPartnerNestedInput
@@ -943,12 +739,7 @@ export type UserUncheckedUpdateWithoutAppraisalsAsReviewerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedUpdateManyWithoutPartnerNestedInput
   appraisalsCreated?: Prisma.AppraisalUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -969,12 +760,7 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsAsPartnerInput = {
 export type UserUpdateWithoutAppraisalsAsPartnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUpdateManyWithoutReviewerNestedInput
@@ -986,12 +772,7 @@ export type UserUncheckedUpdateWithoutAppraisalsAsPartnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
   appraisalsCreated?: Prisma.AppraisalUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1012,12 +793,7 @@ export type UserUpdateToOneWithWhereWithoutAppraisalsCreatedInput = {
 export type UserUpdateWithoutAppraisalsCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUpdateManyWithoutReviewerNestedInput
@@ -1029,12 +805,7 @@ export type UserUncheckedUpdateWithoutAppraisalsCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedUpdateManyWithoutPartnerNestedInput
@@ -1044,23 +815,13 @@ export type UserUncheckedUpdateWithoutAppraisalsCreatedInput = {
 export type UserCreateManyOrganizationInput = {
   id?: string
   altomateUserId: string
-  email: string
-  name: string
-  role?: $Enums.UserRole
-  title?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type UserUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUpdateManyWithoutPartnerNestedInput
@@ -1071,12 +832,7 @@ export type UserUpdateWithoutOrganizationInput = {
 export type UserUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appraisalsAsReviewee?: Prisma.AppraisalUncheckedUpdateManyWithoutRevieweeNestedInput
   appraisalsAsReviewer?: Prisma.AppraisalUncheckedUpdateManyWithoutReviewerNestedInput
   appraisalsAsPartner?: Prisma.AppraisalUncheckedUpdateManyWithoutPartnerNestedInput
@@ -1087,12 +843,7 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
 export type UserUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   altomateUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1166,12 +917,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   organizationId?: boolean
   altomateUserId?: boolean
-  email?: boolean
-  name?: boolean
-  role?: boolean
-  title?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   appraisalsAsReviewee?: boolean | Prisma.User$appraisalsAsRevieweeArgs<ExtArgs>
   appraisalsAsReviewer?: boolean | Prisma.User$appraisalsAsReviewerArgs<ExtArgs>
@@ -1187,15 +933,10 @@ export type UserSelectScalar = {
   id?: boolean
   organizationId?: boolean
   altomateUserId?: boolean
-  email?: boolean
-  name?: boolean
-  role?: boolean
-  title?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "altomateUserId" | "email" | "name" | "role" | "title" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "altomateUserId" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   appraisalsAsReviewee?: boolean | Prisma.User$appraisalsAsRevieweeArgs<ExtArgs>
@@ -1220,23 +961,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     organizationId: string
     /**
-     * The join key back to AltomateHR's own user id. Every row exists
-     * because it was synced from AltomateHR (mocked) — there are no local
-     * credentials or locally-managed accounts.
+     * The join key back to AltomateHR's own user id.
      */
     altomateUserId: string
-    email: string
-    name: string
-    role: $Enums.UserRole
-    /**
-     * Free-text job title, shown as "position" on the admin employees table
-     * and snapshotted onto `Appraisal.role` when a cycle starts. AltomateHR
-     * keeps this on a separate `EmployeeProfile` row; AppraisifyAlt has no
-     * equivalent module, so it lives directly on `User`.
-     */
-    title: string | null
     createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1615,12 +1343,7 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly organizationId: Prisma.FieldRef<"User", 'String'>
   readonly altomateUserId: Prisma.FieldRef<"User", 'String'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'UserRole'>
-  readonly title: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 

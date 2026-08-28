@@ -1,22 +1,17 @@
 /**
  * Backfill a "Standard" default template into every existing org that
  * doesn't already have one — covers orgs created before this feature
- * existed, or created via scripts/provision-org-token.ts (which upserts
- * an Organization row directly, bypassing the auto-seed-on-first-login
- * hook in lib/auth/authenticate.ts).
+ * existed.
  *
  * Going forward, new orgs get this automatically on their first login —
  * see seedDefaultTemplateForOrg() in
  * modules/appraisify/application/services/appraisal-template.service.ts.
  * This script can't import that function directly (it's behind
- * `server-only`, which doesn't resolve outside Next's bundler — same
- * reason lib/altomatehr/token-crypto.ts had to drop the guard, except
- * this guard IS load-bearing for real request-serving code, so it stays
- * put here and the script talks to Prisma directly instead, same pattern
- * as scripts/provision-org-token.ts). The question content
- * (DEFAULT_APPRAISAL_QUESTIONS) is still imported from the one shared
- * source so the two paths can't drift on content, even though they can't
- * share the write logic itself.
+ * `server-only`, which doesn't resolve outside Next's bundler), so it
+ * duplicates the same create() call against Prisma directly instead,
+ * sharing only the DEFAULT_APPRAISAL_QUESTIONS content. Safe to call this
+ * twice for the same org either way — it checks for an existing
+ * "Standard" template first.
  *
  * Usage:
  *   npx tsx scripts/seed-default-templates.ts

@@ -928,7 +928,6 @@ export const OrganizationScalarFieldEnum = {
   id: 'id',
   altomateOrgId: 'altomateOrgId',
   name: 'name',
-  altomateApiTokenEncrypted: 'altomateApiTokenEncrypted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -940,12 +939,7 @@ export const UserScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
   altomateUserId: 'altomateUserId',
-  email: 'email',
-  name: 'name',
-  role: 'role',
-  title: 'title',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -979,6 +973,9 @@ export const AppraisalScalarFieldEnum = {
   reviewerId: 'reviewerId',
   partnerId: 'partnerId',
   createdByUserId: 'createdByUserId',
+  revieweeName: 'revieweeName',
+  reviewerName: 'reviewerName',
+  partnerName: 'partnerName',
   revieweeGoals: 'revieweeGoals',
   revieweeRemarks: 'revieweeRemarks',
   revieweeDevelopment: 'revieweeDevelopment',
@@ -1048,19 +1045,10 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
 export const OrganizationOrderByRelevanceFieldEnum = {
   id: 'id',
   altomateOrgId: 'altomateOrgId',
-  name: 'name',
-  altomateApiTokenEncrypted: 'altomateApiTokenEncrypted'
+  name: 'name'
 } as const
 
 export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum]
@@ -1069,13 +1057,18 @@ export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByR
 export const UserOrderByRelevanceFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
-  altomateUserId: 'altomateUserId',
-  email: 'email',
-  name: 'name',
-  title: 'title'
+  altomateUserId: 'altomateUserId'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const NotificationOrderByRelevanceFieldEnum = {
@@ -1100,6 +1093,9 @@ export const AppraisalOrderByRelevanceFieldEnum = {
   reviewerId: 'reviewerId',
   partnerId: 'partnerId',
   createdByUserId: 'createdByUserId',
+  revieweeName: 'revieweeName',
+  reviewerName: 'reviewerName',
+  partnerName: 'partnerName',
   revieweeGoals: 'revieweeGoals',
   revieweeRemarks: 'revieweeRemarks',
   revieweeDevelopment: 'revieweeDevelopment',
@@ -1165,13 +1161,6 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'UserRole'
- */
-export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
     
 
 

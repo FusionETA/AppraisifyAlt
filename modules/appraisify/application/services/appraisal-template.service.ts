@@ -19,7 +19,7 @@ const DEFAULT_TEMPLATE_NAME = "Standard"
  * so the content matches what an org would otherwise get anyway — this
  * just makes it a real, editable template instead of a hidden constant.
  *
- * Called once per org on first login (buildSessionUserFromAltomateIdentity).
+ * Called once per org on first login (buildSessionFromTokenExchange).
  * scripts/seed-default-templates.ts backfills orgs that already existed
  * before this was added — it can't call this function directly (it's
  * behind `server-only`, which doesn't resolve in a bare tsx script), so it

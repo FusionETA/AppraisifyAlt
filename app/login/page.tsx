@@ -1,4 +1,3 @@
-import { LoginForm } from "@/app/login/login-form"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getMode } from "@/lib/altomatehr/client"
@@ -10,9 +9,26 @@ import { isAltomateDevToolsEnabled } from "@/lib/altomatehr/dev-tools"
 // dev-tools check to run fresh on every request instead.
 export const dynamic = "force-dynamic"
 
-export default function LoginPage() {
+const ERROR_MESSAGES: Record<string, string> = {
+  "missing-ticket": "That link is missing its sign-in ticket. Please return to AltomateHR and launch Appraisify again.",
+  "invalid-ticket": "That sign-in link has expired or already been used. Please return to AltomateHR and launch Appraisify again.",
+  "refresh-failed": "Your AltomateHR session expired. Please return to AltomateHR and launch Appraisify again.",
+}
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string; reason?: string }>
+}) {
   const devToolsEnabled = isAltomateDevToolsEnabled()
   const mode = devToolsEnabled ? getMode() : null
+
+  const { error, reason } = await searchParams
+  const errorMessage =
+    error === "sso"
+      ? (reason && ERROR_MESSAGES[reason]) ??
+        "We couldn't verify your AltomateHR sign-in link. Please return to AltomateHR and launch Appraisify again."
+      : null
 
   return (
     <main className="flex min-h-screen items-center px-4 py-10">
@@ -23,10 +39,18 @@ export default function LoginPage() {
               A
             </div>
             <CardTitle className="mt-2 text-3xl">Appraisify</CardTitle>
-            <p className="text-sm text-muted-foreground">Sign in to your account</p>
           </CardHeader>
-          <CardContent className="p-8">
-            <LoginForm />
+          <CardContent className="space-y-4 p-8">
+            {errorMessage ? (
+              <p className="rounded-2xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm font-medium text-destructive">
+                {errorMessage}
+              </p>
+            ) : null}
+            <p className="text-center text-sm text-muted-foreground">
+              Appraisify is launched from AltomateHR. Sign in to AltomateHR and click{" "}
+              <span className="font-medium text-foreground">Launch Appraisify</span> from your dashboard to
+              continue.
+            </p>
           </CardContent>
         </Card>
         {devToolsEnabled && (

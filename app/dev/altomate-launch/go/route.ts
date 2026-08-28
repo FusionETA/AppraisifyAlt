@@ -8,7 +8,7 @@ import { getRequestOrigin } from "@/lib/request-origin"
  *
  * Dev-only stand-in for AltomateHR's "Launch Appraisify" button. The
  * ticket value itself just encodes the role ("stub-role:<ROLE>"), which
- * verifyAltomateTicket() in lib/altomatehr/client.ts decodes back to the
+ * exchangeAltomateTicket() in lib/altomatehr/client.ts decodes back to the
  * matching stub fixture — no real ticket store needed.
  *
  * 404s unless dev tools are enabled (see lib/altomatehr/dev-tools.ts) —

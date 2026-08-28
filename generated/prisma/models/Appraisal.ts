@@ -47,6 +47,9 @@ export type AppraisalMinAggregateOutputType = {
   reviewerId: string | null
   partnerId: string | null
   createdByUserId: string | null
+  revieweeName: string | null
+  reviewerName: string | null
+  partnerName: string | null
   revieweeGoals: string | null
   revieweeRemarks: string | null
   revieweeDevelopment: string | null
@@ -76,6 +79,9 @@ export type AppraisalMaxAggregateOutputType = {
   reviewerId: string | null
   partnerId: string | null
   createdByUserId: string | null
+  revieweeName: string | null
+  reviewerName: string | null
+  partnerName: string | null
   revieweeGoals: string | null
   revieweeRemarks: string | null
   revieweeDevelopment: string | null
@@ -105,6 +111,9 @@ export type AppraisalCountAggregateOutputType = {
   reviewerId: number
   partnerId: number
   createdByUserId: number
+  revieweeName: number
+  reviewerName: number
+  partnerName: number
   revieweeGoals: number
   revieweeRemarks: number
   revieweeDevelopment: number
@@ -144,6 +153,9 @@ export type AppraisalMinAggregateInputType = {
   reviewerId?: true
   partnerId?: true
   createdByUserId?: true
+  revieweeName?: true
+  reviewerName?: true
+  partnerName?: true
   revieweeGoals?: true
   revieweeRemarks?: true
   revieweeDevelopment?: true
@@ -173,6 +185,9 @@ export type AppraisalMaxAggregateInputType = {
   reviewerId?: true
   partnerId?: true
   createdByUserId?: true
+  revieweeName?: true
+  reviewerName?: true
+  partnerName?: true
   revieweeGoals?: true
   revieweeRemarks?: true
   revieweeDevelopment?: true
@@ -202,6 +217,9 @@ export type AppraisalCountAggregateInputType = {
   reviewerId?: true
   partnerId?: true
   createdByUserId?: true
+  revieweeName?: true
+  reviewerName?: true
+  partnerName?: true
   revieweeGoals?: true
   revieweeRemarks?: true
   revieweeDevelopment?: true
@@ -318,6 +336,9 @@ export type AppraisalGroupByOutputType = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals: string | null
   revieweeRemarks: string | null
   revieweeDevelopment: string | null
@@ -370,6 +391,9 @@ export type AppraisalWhereInput = {
   reviewerId?: Prisma.StringFilter<"Appraisal"> | string
   partnerId?: Prisma.StringFilter<"Appraisal"> | string
   createdByUserId?: Prisma.StringFilter<"Appraisal"> | string
+  revieweeName?: Prisma.StringFilter<"Appraisal"> | string
+  reviewerName?: Prisma.StringFilter<"Appraisal"> | string
+  partnerName?: Prisma.StringFilter<"Appraisal"> | string
   revieweeGoals?: Prisma.StringNullableFilter<"Appraisal"> | string | null
   revieweeRemarks?: Prisma.StringNullableFilter<"Appraisal"> | string | null
   revieweeDevelopment?: Prisma.StringNullableFilter<"Appraisal"> | string | null
@@ -405,6 +429,9 @@ export type AppraisalOrderByWithRelationInput = {
   reviewerId?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
+  revieweeName?: Prisma.SortOrder
+  reviewerName?: Prisma.SortOrder
+  partnerName?: Prisma.SortOrder
   revieweeGoals?: Prisma.SortOrderInput | Prisma.SortOrder
   revieweeRemarks?: Prisma.SortOrderInput | Prisma.SortOrder
   revieweeDevelopment?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -444,6 +471,9 @@ export type AppraisalWhereUniqueInput = Prisma.AtLeast<{
   reviewerId?: Prisma.StringFilter<"Appraisal"> | string
   partnerId?: Prisma.StringFilter<"Appraisal"> | string
   createdByUserId?: Prisma.StringFilter<"Appraisal"> | string
+  revieweeName?: Prisma.StringFilter<"Appraisal"> | string
+  reviewerName?: Prisma.StringFilter<"Appraisal"> | string
+  partnerName?: Prisma.StringFilter<"Appraisal"> | string
   revieweeGoals?: Prisma.StringNullableFilter<"Appraisal"> | string | null
   revieweeRemarks?: Prisma.StringNullableFilter<"Appraisal"> | string | null
   revieweeDevelopment?: Prisma.StringNullableFilter<"Appraisal"> | string | null
@@ -479,6 +509,9 @@ export type AppraisalOrderByWithAggregationInput = {
   reviewerId?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
+  revieweeName?: Prisma.SortOrder
+  reviewerName?: Prisma.SortOrder
+  partnerName?: Prisma.SortOrder
   revieweeGoals?: Prisma.SortOrderInput | Prisma.SortOrder
   revieweeRemarks?: Prisma.SortOrderInput | Prisma.SortOrder
   revieweeDevelopment?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -516,6 +549,9 @@ export type AppraisalScalarWhereWithAggregatesInput = {
   reviewerId?: Prisma.StringWithAggregatesFilter<"Appraisal"> | string
   partnerId?: Prisma.StringWithAggregatesFilter<"Appraisal"> | string
   createdByUserId?: Prisma.StringWithAggregatesFilter<"Appraisal"> | string
+  revieweeName?: Prisma.StringWithAggregatesFilter<"Appraisal"> | string
+  reviewerName?: Prisma.StringWithAggregatesFilter<"Appraisal"> | string
+  partnerName?: Prisma.StringWithAggregatesFilter<"Appraisal"> | string
   revieweeGoals?: Prisma.StringNullableWithAggregatesFilter<"Appraisal"> | string | null
   revieweeRemarks?: Prisma.StringNullableWithAggregatesFilter<"Appraisal"> | string | null
   revieweeDevelopment?: Prisma.StringNullableWithAggregatesFilter<"Appraisal"> | string | null
@@ -540,6 +576,9 @@ export type AppraisalCreateInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -575,6 +614,9 @@ export type AppraisalUncheckedCreateInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -600,6 +642,9 @@ export type AppraisalUpdateInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -635,6 +680,9 @@ export type AppraisalUncheckedUpdateInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -665,6 +713,9 @@ export type AppraisalCreateManyInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -689,6 +740,9 @@ export type AppraisalUpdateManyMutationInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -718,6 +772,9 @@ export type AppraisalUncheckedUpdateManyInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -763,6 +820,9 @@ export type AppraisalCountOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
+  revieweeName?: Prisma.SortOrder
+  reviewerName?: Prisma.SortOrder
+  partnerName?: Prisma.SortOrder
   revieweeGoals?: Prisma.SortOrder
   revieweeRemarks?: Prisma.SortOrder
   revieweeDevelopment?: Prisma.SortOrder
@@ -796,6 +856,9 @@ export type AppraisalMaxOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
+  revieweeName?: Prisma.SortOrder
+  reviewerName?: Prisma.SortOrder
+  partnerName?: Prisma.SortOrder
   revieweeGoals?: Prisma.SortOrder
   revieweeRemarks?: Prisma.SortOrder
   revieweeDevelopment?: Prisma.SortOrder
@@ -825,6 +888,9 @@ export type AppraisalMinOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
+  revieweeName?: Prisma.SortOrder
+  reviewerName?: Prisma.SortOrder
+  partnerName?: Prisma.SortOrder
   revieweeGoals?: Prisma.SortOrder
   revieweeRemarks?: Prisma.SortOrder
   revieweeDevelopment?: Prisma.SortOrder
@@ -1098,6 +1164,9 @@ export type AppraisalCreateWithoutOrganizationInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1131,6 +1200,9 @@ export type AppraisalUncheckedCreateWithoutOrganizationInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1190,6 +1262,9 @@ export type AppraisalScalarWhereInput = {
   reviewerId?: Prisma.StringFilter<"Appraisal"> | string
   partnerId?: Prisma.StringFilter<"Appraisal"> | string
   createdByUserId?: Prisma.StringFilter<"Appraisal"> | string
+  revieweeName?: Prisma.StringFilter<"Appraisal"> | string
+  reviewerName?: Prisma.StringFilter<"Appraisal"> | string
+  partnerName?: Prisma.StringFilter<"Appraisal"> | string
   revieweeGoals?: Prisma.StringNullableFilter<"Appraisal"> | string | null
   revieweeRemarks?: Prisma.StringNullableFilter<"Appraisal"> | string | null
   revieweeDevelopment?: Prisma.StringNullableFilter<"Appraisal"> | string | null
@@ -1214,6 +1289,9 @@ export type AppraisalCreateWithoutRevieweeInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1247,6 +1325,9 @@ export type AppraisalUncheckedCreateWithoutRevieweeInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1282,6 +1363,9 @@ export type AppraisalCreateWithoutReviewerInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1315,6 +1399,9 @@ export type AppraisalUncheckedCreateWithoutReviewerInput = {
   revieweeId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1350,6 +1437,9 @@ export type AppraisalCreateWithoutPartnerInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1383,6 +1473,9 @@ export type AppraisalUncheckedCreateWithoutPartnerInput = {
   revieweeId: string
   reviewerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1418,6 +1511,9 @@ export type AppraisalCreateWithoutCreatedByInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1451,6 +1547,9 @@ export type AppraisalUncheckedCreateWithoutCreatedByInput = {
   revieweeId: string
   reviewerId: string
   partnerId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1550,6 +1649,9 @@ export type AppraisalCreateWithoutQuestionsInput = {
   type?: $Enums.AppraisalType
   team?: string | null
   role?: string | null
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1584,6 +1686,9 @@ export type AppraisalUncheckedCreateWithoutQuestionsInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1624,6 +1729,9 @@ export type AppraisalUpdateWithoutQuestionsInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1658,6 +1766,9 @@ export type AppraisalUncheckedUpdateWithoutQuestionsInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1686,6 +1797,9 @@ export type AppraisalCreateManyOrganizationInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1710,6 +1824,9 @@ export type AppraisalUpdateWithoutOrganizationInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1743,6 +1860,9 @@ export type AppraisalUncheckedUpdateWithoutOrganizationInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1772,6 +1892,9 @@ export type AppraisalUncheckedUpdateManyWithoutOrganizationInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1800,6 +1923,9 @@ export type AppraisalCreateManyRevieweeInput = {
   reviewerId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1828,6 +1954,9 @@ export type AppraisalCreateManyReviewerInput = {
   revieweeId: string
   partnerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1856,6 +1985,9 @@ export type AppraisalCreateManyPartnerInput = {
   revieweeId: string
   reviewerId: string
   createdByUserId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1884,6 +2016,9 @@ export type AppraisalCreateManyCreatedByInput = {
   revieweeId: string
   reviewerId: string
   partnerId: string
+  revieweeName: string
+  reviewerName: string
+  partnerName: string
   revieweeGoals?: string | null
   revieweeRemarks?: string | null
   revieweeDevelopment?: string | null
@@ -1908,6 +2043,9 @@ export type AppraisalUpdateWithoutRevieweeInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1941,6 +2079,9 @@ export type AppraisalUncheckedUpdateWithoutRevieweeInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1970,6 +2111,9 @@ export type AppraisalUncheckedUpdateManyWithoutRevieweeInput = {
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1994,6 +2138,9 @@ export type AppraisalUpdateWithoutReviewerInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2027,6 +2174,9 @@ export type AppraisalUncheckedUpdateWithoutReviewerInput = {
   revieweeId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2056,6 +2206,9 @@ export type AppraisalUncheckedUpdateManyWithoutReviewerInput = {
   revieweeId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2080,6 +2233,9 @@ export type AppraisalUpdateWithoutPartnerInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2113,6 +2269,9 @@ export type AppraisalUncheckedUpdateWithoutPartnerInput = {
   revieweeId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2142,6 +2301,9 @@ export type AppraisalUncheckedUpdateManyWithoutPartnerInput = {
   revieweeId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2166,6 +2328,9 @@ export type AppraisalUpdateWithoutCreatedByInput = {
   type?: Prisma.EnumAppraisalTypeFieldUpdateOperationsInput | $Enums.AppraisalType
   team?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2199,6 +2364,9 @@ export type AppraisalUncheckedUpdateWithoutCreatedByInput = {
   revieweeId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2228,6 +2396,9 @@ export type AppraisalUncheckedUpdateManyWithoutCreatedByInput = {
   revieweeId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewerId?: Prisma.StringFieldUpdateOperationsInput | string
   partnerId?: Prisma.StringFieldUpdateOperationsInput | string
+  revieweeName?: Prisma.StringFieldUpdateOperationsInput | string
+  reviewerName?: Prisma.StringFieldUpdateOperationsInput | string
+  partnerName?: Prisma.StringFieldUpdateOperationsInput | string
   revieweeGoals?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeRemarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revieweeDevelopment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2288,6 +2459,9 @@ export type AppraisalSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   reviewerId?: boolean
   partnerId?: boolean
   createdByUserId?: boolean
+  revieweeName?: boolean
+  reviewerName?: boolean
+  partnerName?: boolean
   revieweeGoals?: boolean
   revieweeRemarks?: boolean
   revieweeDevelopment?: boolean
@@ -2326,6 +2500,9 @@ export type AppraisalSelectScalar = {
   reviewerId?: boolean
   partnerId?: boolean
   createdByUserId?: boolean
+  revieweeName?: boolean
+  reviewerName?: boolean
+  partnerName?: boolean
   revieweeGoals?: boolean
   revieweeRemarks?: boolean
   revieweeDevelopment?: boolean
@@ -2342,7 +2519,7 @@ export type AppraisalSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AppraisalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "referenceNumber" | "stage" | "year" | "type" | "team" | "role" | "revieweeId" | "reviewerId" | "partnerId" | "createdByUserId" | "revieweeGoals" | "revieweeRemarks" | "revieweeDevelopment" | "reviewerGoals" | "reviewerRemarks" | "reviewerDevelopment" | "partnerGoals" | "partnerRemarks" | "partnerDevelopment" | "revieweeSubmittedAt" | "reviewerSubmittedAt" | "partnerSubmittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["appraisal"]>
+export type AppraisalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "referenceNumber" | "stage" | "year" | "type" | "team" | "role" | "revieweeId" | "reviewerId" | "partnerId" | "createdByUserId" | "revieweeName" | "reviewerName" | "partnerName" | "revieweeGoals" | "revieweeRemarks" | "revieweeDevelopment" | "reviewerGoals" | "reviewerRemarks" | "reviewerDevelopment" | "partnerGoals" | "partnerRemarks" | "partnerDevelopment" | "revieweeSubmittedAt" | "reviewerSubmittedAt" | "partnerSubmittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["appraisal"]>
 export type AppraisalInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   reviewee?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2380,6 +2557,16 @@ export type $AppraisalPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     reviewerId: string
     partnerId: string
     createdByUserId: string
+    /**
+     * Snapshot of each participant's name at the moment the cycle is
+     * launched — the live AltomateHR roster is never cached locally, so
+     * without this a historical appraisal could never resolve names for
+     * someone who's since left the org. No column for createdByUserId:
+     * confirmed never read for display anywhere in the app.
+     */
+    revieweeName: string
+    reviewerName: string
+    partnerName: string
     /**
      * Per-phase section free-text (Goals Review / Overall Remarks /
      * Development Plans), one set per phase.
@@ -2785,6 +2972,9 @@ export interface AppraisalFieldRefs {
   readonly reviewerId: Prisma.FieldRef<"Appraisal", 'String'>
   readonly partnerId: Prisma.FieldRef<"Appraisal", 'String'>
   readonly createdByUserId: Prisma.FieldRef<"Appraisal", 'String'>
+  readonly revieweeName: Prisma.FieldRef<"Appraisal", 'String'>
+  readonly reviewerName: Prisma.FieldRef<"Appraisal", 'String'>
+  readonly partnerName: Prisma.FieldRef<"Appraisal", 'String'>
   readonly revieweeGoals: Prisma.FieldRef<"Appraisal", 'String'>
   readonly revieweeRemarks: Prisma.FieldRef<"Appraisal", 'String'>
   readonly revieweeDevelopment: Prisma.FieldRef<"Appraisal", 'String'>

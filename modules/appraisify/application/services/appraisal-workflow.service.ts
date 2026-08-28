@@ -3,6 +3,8 @@ import "server-only"
 import { z } from "zod"
 
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
+import { identityRepository } from "@/modules/identity/infrastructure/identity.repository"
+import { getLivePortalRoster } from "@/modules/identity/application/services/roster.service"
 import { notify } from "@/modules/notifications/application/services/notification.service"
 import {
   appraisalRepository,
@@ -213,9 +215,12 @@ export async function createAppraisalsForEmployees(input: unknown): Promise<Crea
   }
   const data = parsed.data
 
-  // Role snapshot per employee (job title).
-  const employees = await appraisalRepository.listOrgEmployees(orgId)
-  const jobTitleByUser = new Map(employees.map((e) => [e.userId, e.jobTitle]))
+  // Live roster fetch — the source for each assignment's name/job-title
+  // snapshot, and the set of AltomateHR ids a picker selection is allowed
+  // to reference (the picker only ever offered people from this same
+  // roster shape, but it may have changed between page load and submit).
+  const roster = await getLivePortalRoster(session)
+  const memberByAltomateId = new Map(roster.map((m) => [m.id, m]))
 
   // Resolve the question set to snapshot: the chosen template, else the
   // built-in default. Snapshotting means later template edits don't touch
@@ -240,17 +245,40 @@ export async function createAppraisalsForEmployees(input: unknown): Promise<Crea
   let createdCount = 0
   for (let i = 0; i < data.assignments.length; i++) {
     const assignment = data.assignments[i]!
+
+    const reviewee = memberByAltomateId.get(assignment.employeeId)
+    const reviewer = memberByAltomateId.get(assignment.reviewerId)
+    const partner = memberByAltomateId.get(assignment.partnerId)
+    if (!reviewee || !reviewer || !partner) {
+      // Roster changed between page load and submit — skip rather than
+      // writing a placeholder name into a permanent snapshot column.
+      continue
+    }
+
+    // Lazily anchor each participant's local identity row — the picker
+    // only ever offers people from the live roster, who may never have
+    // logged into Appraisify themselves yet (see prisma/schema.prisma's
+    // User model comment).
+    const [revieweeUser, reviewerUser, partnerUser] = await Promise.all([
+      identityRepository.upsertUserFromAltomate({ altomateUserId: reviewee.id, organizationId: orgId }),
+      identityRepository.upsertUserFromAltomate({ altomateUserId: reviewer.id, organizationId: orgId }),
+      identityRepository.upsertUserFromAltomate({ altomateUserId: partner.id, organizationId: orgId }),
+    ])
+
     const ref = buildAppraisalReference(data.year, base + 1 + i)
     const payload: CreateAppraisalInput = {
       orgId,
       createdByUserId: session.userId,
-      revieweeId: assignment.employeeId,
-      reviewerId: assignment.reviewerId,
-      partnerId: assignment.partnerId,
+      revieweeId: revieweeUser.id,
+      revieweeName: reviewee.name,
+      reviewerId: reviewerUser.id,
+      reviewerName: reviewer.name,
+      partnerId: partnerUser.id,
+      partnerName: partner.name,
       year: data.year,
       type: data.type,
       team: null,
-      role: jobTitleByUser.get(assignment.employeeId) ?? null,
+      role: reviewee.jobTitle,
       referenceNumber: ref,
       questions: questionSet,
     }
@@ -259,7 +287,7 @@ export async function createAppraisalsForEmployees(input: unknown): Promise<Crea
 
     try {
       await notify({
-        userId: assignment.employeeId,
+        userId: revieweeUser.id,
         organizationId: orgId,
         type: "APPRAISAL_PHASE_READY",
         title: "Appraisal Cycle Started",

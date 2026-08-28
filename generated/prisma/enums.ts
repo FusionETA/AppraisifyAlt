@@ -9,16 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const UserRole = {
-  EMPLOYEE: 'EMPLOYEE',
-  SUPERVISOR: 'SUPERVISOR',
-  ADMIN: 'ADMIN',
-  OWNER: 'OWNER'
-} as const
-
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
-
-
 export const NotificationType = {
   APPRAISAL_PHASE_READY: 'APPRAISAL_PHASE_READY',
   APPRAISAL_COMPLETED: 'APPRAISAL_COMPLETED'

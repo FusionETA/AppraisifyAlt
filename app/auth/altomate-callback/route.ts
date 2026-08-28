@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { verifyAltomateTicket } from "@/lib/altomatehr/client"
-import { buildSessionUserFromAltomateIdentity } from "@/lib/auth/authenticate"
+import { exchangeAltomateTicket } from "@/lib/altomatehr/client"
+import { buildSessionFromTokenExchange } from "@/lib/auth/authenticate"
 import { buildSessionCookie, getHomePathForRole } from "@/lib/auth/session"
 import { getRequestOrigin } from "@/lib/request-origin"
 
@@ -23,12 +23,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.redirect(new URL("/login?error=sso&reason=missing-ticket", origin))
   }
 
-  const result = await verifyAltomateTicket(ticket)
+  const result = await exchangeAltomateTicket(ticket)
   if (!result.ok) {
     return NextResponse.redirect(new URL("/login?error=sso&reason=invalid-ticket", origin))
   }
 
-  const user = await buildSessionUserFromAltomateIdentity(result.identity)
+  const user = await buildSessionFromTokenExchange(result)
   const cookie = buildSessionCookie(user)
   const response = NextResponse.redirect(new URL(getHomePathForRole(user.role), origin))
   response.cookies.set(cookie.name, cookie.value, cookie.options)

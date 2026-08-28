@@ -3,7 +3,7 @@ import "server-only"
 import { getCurrentSession, resolveActiveOrgId } from "@/lib/auth/session"
 import { appraisalRepository } from "@/modules/appraisify/infrastructure/appraisal.repository"
 import { appraisalTemplateRepository } from "@/modules/appraisify/infrastructure/appraisal-template.repository"
-import { syncEmployeesFromAltomate } from "@/modules/identity/application/services/identity.service"
+import { getLivePortalRoster } from "@/modules/identity/application/services/roster.service"
 import {
   buildCycleLabel,
   phaseAccessFor,
@@ -160,10 +160,12 @@ export async function getAdminAppraisalDetailData(
 
 /**
  * Data bag for the dedicated Start Appraisal page: the selected employees
- * (validated against the org's real employee list — an id that doesn't
- * belong to this org is silently dropped, not trusted from the query
- * string), the full reviewer/partner candidate list, and the org's question
- * templates.
+ * (validated against the org's live AltomateHR roster — an id that
+ * doesn't belong to this org is silently dropped, not trusted from the
+ * query string), the full reviewer/partner candidate list, and the org's
+ * question templates. Both `employees` and `people` are derived from ONE
+ * live roster fetch (getLivePortalRoster, EMPLOYEE/SUPERVISOR only) —
+ * never cached, never a separate DB round-trip.
  */
 export async function getStartAppraisalPageData(
   employeeIds: string[],
@@ -173,22 +175,21 @@ export async function getStartAppraisalPageData(
   const orgId = resolveActiveOrgId(session)
   if (!orgId) return null
 
-  await syncEmployeesFromAltomate(orgId, session.altomateOrgId)
-
-  const [allEmployees, people, templates] = await Promise.all([
-    appraisalRepository.listOrgEmployees(orgId),
-    appraisalRepository.listOrgPeople(orgId),
+  const [roster, templates] = await Promise.all([
+    getLivePortalRoster(session),
     appraisalTemplateRepository.listForOrg(orgId),
   ])
 
+  const people = roster.map((m) => ({ id: m.id, name: m.name, initials: initialsFor(m.name) }))
+
   const idSet = new Set(employeeIds)
-  const employees = allEmployees
-    .filter((e) => idSet.has(e.userId))
-    .map((e) => ({
-      id: e.userId,
-      name: e.name,
-      initials: initialsFor(e.name),
-      position: e.jobTitle,
+  const employees = roster
+    .filter((m) => idSet.has(m.id))
+    .map((m) => ({
+      id: m.id,
+      name: m.name,
+      initials: initialsFor(m.name),
+      position: m.jobTitle ?? "",
     }))
 
   return { employees, people, templates }

@@ -1,0 +1,15 @@
+{
+  "accessToken": "apx_stub_at_placeholder",
+  "refreshToken": "apx_stub_rt_placeholder",
+  "expiresIn": 20,
+  "user": {
+    "id": "usr_stub_owner_001",
+    "name": "Stub Owner",
+    "email": "stub.owner@fusioneta.mock",
+    "role": "Owner"
+  },
+  "organization": {
+    "id": "org_stub_001",
+    "name": "Stub Organization"
+  }
+}

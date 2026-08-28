@@ -1,6 +1,5 @@
 import "server-only"
 
-import { appRoles, isEmployeePortalRole } from "@/lib/auth/types"
 import { toNumber } from "@/lib/decimal"
 import { getPrismaClient } from "@/lib/prisma"
 import { buildInitials } from "@/lib/utils"
@@ -28,12 +27,14 @@ function getAppraisalsPrismaClient() {
 
 /* ── selection shapes + mappers ────────────────────────────────────── */
 
-const personSelect = { select: { id: true, name: true } }
-
+/**
+ * No reviewee/reviewer/partner relation include — the `User` table is a
+ * minimal identity anchor with no name field (see prisma/schema.prisma),
+ * so there's nothing to join for display. Names come from the
+ * revieweeName/reviewerName/partnerName columns snapshotted directly onto
+ * the Appraisal row at creation time (see mapAppraisal below).
+ */
 const appraisalInclude = {
-  reviewee: personSelect,
-  reviewer: personSelect,
-  partner: personSelect,
   questions: { orderBy: { order: "asc" } },
 } satisfies Prisma.AppraisalInclude
 
@@ -47,8 +48,8 @@ function decOrNull(value: unknown): number | null {
   return toNumber(value) ?? null
 }
 
-function mapPerson(p: { id: string; name: string }): AppraisalPersonRef {
-  return { id: p.id, name: p.name, initials: buildInitials(p.name) }
+function personRef(id: string, name: string): AppraisalPersonRef {
+  return { id, name, initials: buildInitials(name) }
 }
 
 function mapQuestion(q: PrismaQuestion): AppraisalQuestionView {
@@ -76,9 +77,9 @@ function mapAppraisal(a: PrismaAppraisalWithRelations): AppraisalRecord {
     type: a.type as AppraisalType,
     team: a.team,
     role: a.role,
-    reviewee: mapPerson(a.reviewee),
-    reviewer: mapPerson(a.reviewer),
-    partner: mapPerson(a.partner),
+    reviewee: personRef(a.revieweeId, a.revieweeName),
+    reviewer: personRef(a.reviewerId, a.reviewerName),
+    partner: personRef(a.partnerId, a.partnerName),
     questions: a.questions.map(mapQuestion),
     revieweeSection: { goals: a.revieweeGoals, remarks: a.revieweeRemarks, development: a.revieweeDevelopment },
     reviewerSection: { goals: a.reviewerGoals, remarks: a.reviewerRemarks, development: a.reviewerDevelopment },
@@ -97,8 +98,11 @@ export type CreateAppraisalInput = {
   orgId: string
   createdByUserId: string
   revieweeId: string
+  revieweeName: string
   reviewerId: string
+  reviewerName: string
   partnerId: string
+  partnerName: string
   year: number
   type: AppraisalType
   team: string | null
@@ -220,8 +224,11 @@ export const appraisalRepository = {
         team: input.team,
         role: input.role,
         revieweeId: input.revieweeId,
+        revieweeName: input.revieweeName,
         reviewerId: input.reviewerId,
+        reviewerName: input.reviewerName,
         partnerId: input.partnerId,
+        partnerName: input.partnerName,
         createdByUserId: input.createdByUserId,
         questions: {
           create: input.questions.map((q) => ({
@@ -294,42 +301,5 @@ export const appraisalRepository = {
       orderBy: { updatedAt: "desc" },
     })
     return rows.map(mapAppraisal)
-  },
-
-  /**
-   * Employees of the org: user id + name + job title (position). AltomateHR
-   * sources this from a separate `EmployeeProfile.jobTitle` row;
-   * AppraisifyAlt has no such module, so it reads `User.title` directly.
-   *
-   * ADMIN/OWNER excluded — they're never appraisal participants, matching
-   * the real AltomateHR roster endpoint's own EMPLOYEE/SUPERVISOR-only
-   * behavior (see lib/altomatehr/client.ts's listAltomateEmployees).
-   */
-  async listOrgEmployees(
-    orgId: string,
-  ): Promise<Array<{ userId: string; name: string; jobTitle: string }>> {
-    const prisma = getAppraisalsPrismaClient()
-    const rows = await prisma.user.findMany({
-      where: { organizationId: orgId, role: { in: appRoles.filter(isEmployeePortalRole) } },
-      select: { id: true, name: true, title: true },
-      orderBy: { name: "asc" },
-    })
-    return rows.map((r) => ({ userId: r.id, name: r.name, jobTitle: r.title ?? "" }))
-  },
-
-  /**
-   * Reviewer / partner candidates for new cycles. Same EMPLOYEE/SUPERVISOR-
-   * only rule as listOrgEmployees above — admins/owners can launch and
-   * oversee appraisals, but never sit inside one as reviewee, reviewer, or
-   * partner.
-   */
-  async listOrgPeople(orgId: string): Promise<AppraisalPersonRef[]> {
-    const prisma = getAppraisalsPrismaClient()
-    const rows = await prisma.user.findMany({
-      where: { organizationId: orgId, role: { in: appRoles.filter(isEmployeePortalRole) } },
-      select: { id: true, name: true },
-      orderBy: { name: "asc" },
-    })
-    return rows.map(mapPerson)
   },
 }

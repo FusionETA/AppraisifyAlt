@@ -21,6 +21,10 @@ const sessionSchema = z.object({
   organizationId: z.string().min(1),
   organizationName: z.string().min(1),
   altomateOrgId: z.string().min(1),
+  altomateAccessToken: z.string().min(1),
+  altomateRefreshToken: z.string().min(1),
+  altomateAccessTokenExpiresAt: z.number().int().positive(),
+  altomateAccessTokenRefreshAt: z.number().int().positive(),
   expiresAt: z.number().int().positive(),
 })
 
