@@ -119,3 +119,47 @@ export function getDatabaseConnectionConfig(): DatabaseConnectionConfig | null {
 export function isDatabaseConfigured() {
   return Boolean(getDatabaseConnectionConfig())
 }
+
+/**
+ * Connection for the read-only agent API (modules/agent-api). Credentials
+ * come ONLY from AGENT_DB_USER / AGENT_DB_PASSWORD — never from the main
+ * connection — so a missing agent login fails closed instead of quietly
+ * running agent queries as the app's read-write user. For the same reason,
+ * reusing the main user here is treated as not configured.
+ *
+ * Host, port, database name and SSL default to the main connection's (it's
+ * the same server); AGENT_DB_HOST / AGENT_DB_PORT / AGENT_DB_NAME /
+ * AGENT_DB_SSL_MODE override them.
+ */
+export function getAgentDatabaseConnectionConfig(): DatabaseConnectionConfig | null {
+  const user = process.env.AGENT_DB_USER
+  const password = process.env.AGENT_DB_PASSWORD
+
+  if (!user || !password) {
+    return null
+  }
+
+  const main = getDatabaseConnectionConfig()
+
+  if (main && main.user === user) {
+    return null
+  }
+
+  const host = process.env.AGENT_DB_HOST || main?.host
+  const database = process.env.AGENT_DB_NAME || main?.database
+
+  if (!host || !database) {
+    return null
+  }
+
+  return {
+    host,
+    port: Number(process.env.AGENT_DB_PORT || main?.port || 3306),
+    user,
+    password,
+    database,
+    ssl: process.env.AGENT_DB_SSL_MODE
+      ? parseSslConfig({ sslMode: process.env.AGENT_DB_SSL_MODE })
+      : main?.ssl,
+  }
+}
