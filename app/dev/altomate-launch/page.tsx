@@ -47,8 +47,9 @@ export default function AltomateLaunchDevPage() {
       <div>
         <h1 className="text-xl font-bold text-foreground">Test accounts</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Dev-only stand-in for AltomateHR&apos;s &quot;Launch Appraisify&quot; button. Signs you
-          in via the same callback route a real AltomateHR redirect would use.
+          Dev-only stand-in for AltomateHR&apos;s &quot;Launch Appraisify&quot; button. Opens a
+          new tab, like the real one, and signs you in via the same callback route a real
+          AltomateHR redirect would use.
         </p>
       </div>
 
@@ -67,6 +68,7 @@ export default function AltomateLaunchDevPage() {
             <li key={account.stubKey}>
               <a
                 href={`/dev/altomate-launch/go?stubRole=${account.stubKey}`}
+                target="_blank"
                 className="flex items-center justify-between gap-4 px-4 py-3 text-sm hover:bg-surface-low/50"
               >
                 <span>

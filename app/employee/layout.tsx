@@ -1,11 +1,14 @@
 import Link from "next/link"
 
+import { getAltomateAppHomeUrl } from "@/lib/altomatehr/client"
 import { getCurrentSession } from "@/lib/auth/session"
 import { logoutAction } from "@/lib/auth/logout-action"
+import { BackToAltomateButton } from "@/components/back-to-altomate-button"
 import { Button } from "@/components/ui/button"
 
 export default async function EmployeeLayout({ children }: { children: React.ReactNode }) {
   const session = await getCurrentSession()
+  const altomateHomeUrl = getAltomateAppHomeUrl()
 
   return (
     <div className="min-h-screen">
@@ -17,8 +20,9 @@ export default async function EmployeeLayout({ children }: { children: React.Rea
             </span>
             Appraisify
           </Link>
-          <div className="flex items-center gap-3">
-            {session ? <span className="text-sm text-muted-foreground">{session.name}</span> : null}
+          <div className="flex items-center gap-1 sm:gap-3">
+            {altomateHomeUrl ? <BackToAltomateButton href={altomateHomeUrl} /> : null}
+            {session ? <span className="hidden text-sm text-muted-foreground sm:inline">{session.name}</span> : null}
             <form action={logoutAction}>
               <Button type="submit" variant="ghost" size="sm">
                 Sign out

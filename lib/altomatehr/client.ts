@@ -7,6 +7,7 @@ import stubTokenExchangeEmployeeTwo from "./stubs/token-exchange-employee-two.js
 import stubTokenExchangeOwner from "./stubs/token-exchange-owner.json"
 import stubTokenExchangeSupervisor from "./stubs/token-exchange-supervisor.json"
 import { appRoles, type AppRole } from "@/lib/auth/types"
+import { isAltomateDevToolsEnabled } from "./dev-tools"
 import type { AltomateEmployee, AltomateSessionOrg, AltomateSessionUser, AltomateTokens } from "./types"
 
 /**
@@ -47,6 +48,17 @@ export function getMode(): "stub" | "real" {
   if (process.env.ALTOMATEHR_INTEGRATION_TEST_MODE === "true") return "stub"
   if (process.env.ALTOMATE_BASE_URL && process.env.ALTOMATE_CLIENT_SECRET) return "real"
   return "stub"
+}
+
+/**
+ * Where the header's "Back to AltomateHR" button points. Real mode: the
+ * AltomateHR web app (ALTOMATE_APP_URL — not ALTOMATE_BASE_URL, the API host
+ * serves no pages). Stub mode: the dev launcher, which stands in for
+ * AltomateHR. null hides the button rather than rendering a dead link.
+ */
+export function getAltomateAppHomeUrl(): string | null {
+  if (getMode() === "real") return process.env.ALTOMATE_APP_URL || null
+  return isAltomateDevToolsEnabled() ? "/dev/altomate-launch" : null
 }
 
 /**
